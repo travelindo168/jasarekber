@@ -473,7 +473,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
   <title>Rekberinaja - Rekening Bersama Aman dan Terpercaya</title>
   <meta name="description" content="Rekberinaja adalah layanan rekening bersama terpercaya untuk transaksi digital, jual beli akun game, dan berbagai keperluan online lainnya.">
   <meta name="keywords" content="rekber, rekening bersama, rekber aman, jual beli akun game, transaksi digital aman">
@@ -498,7 +499,7 @@
   <!-- Favicon -->
   <link rel="icon" href="https://rekberinaja.github.io/images/favicon.png" type="image/png" />
 
-  <!-- Structured Data (SEO Schema) -->
+  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -514,39 +515,109 @@
   }
   </script>
 
-  <!-- CSS -->
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
+    /* RESET DAN GAYA UTAMA */
+    * {
       margin: 0;
       padding: 0;
-      background: #f8fafc;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
     header {
-      background: #0059ff;
+      background: linear-gradient(135deg, #0061ff, #00c6ff);
       color: white;
-      padding: 1.2em;
+      padding: 20px 10px;
       text-align: center;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
     }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
     main {
-      padding: 20px;
+      padding: 20px 15px;
       text-align: center;
     }
+
+    .section {
+      background: white;
+      margin: 15px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+    }
+
+    .section h2 {
+      color: #0059ff;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .section p {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
     .cta {
+      display: inline-block;
       background: #0059ff;
       color: white;
-      padding: 10px 20px;
-      border: none;
+      padding: 12px 25px;
       border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0, 89, 255, 0.3);
+      transition: 0.3s ease;
     }
+
+    .cta:hover {
+      background: #0045cc;
+      box-shadow: 0 5px 12px rgba(0, 89, 255, 0.4);
+    }
+
     footer {
       background: #0e1628;
-      color: #fff;
-      padding: 20px;
+      color: white;
+      padding: 20px 10px;
       text-align: center;
-      font-size: 14px;
+      font-size: 0.85rem;
+      margin-top: 25px;
+    }
+
+    footer a {
+      color: #00c6ff;
+      text-decoration: none;
+    }
+
+    /* RESPONSIVE MOBILE */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      .section {
+        padding: 15px;
+      }
+      .cta {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -558,15 +629,30 @@
   </header>
 
   <main>
-    <h2>Transaksi Aman, Nyaman, dan Cepat</h2>
-    <p>Rekberinaja hadir sebagai solusi rekening bersama untuk transaksi digital Anda.</p>
-    <a href="https://wa.me/6289531332329" target="_blank">
-      <button class="cta">Hubungi Kami via WhatsApp</button>
-    </a>
+    <div class="section">
+      <h2>Transaksi Aman, Cepat & Terpercaya</h2>
+      <p>Kami menjadi perantara terpercaya dalam transaksi jual beli online agar kedua pihak merasa aman dan nyaman.</p>
+      <a href="https://wa.me/6289531332329" target="_blank" class="cta">Chat WhatsApp</a>
+    </div>
+
+    <div class="section">
+      <h2>Layanan Kami</h2>
+      <p>✔️ Rekber Jual Beli Akun Game<br>
+         ✔️ Rekber Digital Product<br>
+         ✔️ Rekber Freelance dan Jasa Online</p>
+    </div>
+
+    <div class="section">
+      <h2>Kenapa Pilih Rekberinaja?</h2>
+      <p>✅ Proses cepat & mudah<br>
+         ✅ Admin aktif 24 jam<br>
+         ✅ Bukti transaksi real<br>
+         ✅ Aman & transparan</p>
+    </div>
   </main>
 
   <footer>
-    <p>© 2025 Rekberinaja | Aman, Cepat, Terpercaya</p>
+    <p>© 2025 Rekberinaja | <a href="https://rekberinaja.github.io/">rekberinaja.github.io</a></p>
   </footer>
 </body>
 </html>
