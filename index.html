@@ -473,33 +473,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
+  <meta name="theme-color" content="#0059ff" />
   <title>Rekberinaja - Rekening Bersama Aman dan Terpercaya</title>
+
+  <!-- SEO -->
   <meta name="description" content="Rekberinaja adalah layanan rekening bersama terpercaya untuk transaksi digital, jual beli akun game, dan berbagai keperluan online lainnya.">
   <meta name="keywords" content="rekber, rekening bersama, rekber aman, jual beli akun game, transaksi digital aman">
   <meta name="author" content="Rekberinaja">
-
   <link rel="canonical" href="https://rekberinaja.github.io/" />
 
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Rekberinaja - Rekening Bersama Aman dan Terpercaya" />
   <meta property="og:description" content="Layanan rekening bersama terpercaya untuk transaksi digital Anda." />
   <meta property="og:image" content="https://rekberinaja.github.io/images/banner-rekberinaja.jpg" />
   <meta property="og:url" content="https://rekberinaja.github.io/" />
-  <meta property="og:site_name" content="Rekberinaja" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rekberinaja - Rekening Bersama Aman dan Terpercaya" />
-  <meta name="twitter:description" content="Rekberinaja, layanan rekening bersama untuk transaksi digital aman dan terpercaya." />
-  <meta name="twitter:image" content="https://rekberinaja.github.io/images/banner-rekberinaja.jpg" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://rekberinaja.github.io/images/favicon.png" type="image/png" />
-
-  <!-- Schema.org JSON-LD -->
+  <!-- JSON-LD Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -507,41 +497,36 @@
     "name": "Rekberinaja",
     "url": "https://rekberinaja.github.io/",
     "logo": "https://rekberinaja.github.io/images/logo.png",
-    "sameAs": [
-      "https://www.facebook.com/rekberinaja",
-      "https://www.instagram.com/rekberinaja"
-    ],
     "description": "Rekberinaja adalah layanan rekening bersama terpercaya untuk transaksi digital dan jual beli akun."
   }
   </script>
 
   <style>
-    /* RESET DAN GAYA UTAMA */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * {margin: 0; padding: 0; box-sizing: border-box;}
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
+      background: #f4f6fa;
       color: #1a1a1a;
-      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
+    /* HEADER */
     header {
       background: linear-gradient(135deg, #0061ff, #00c6ff);
       color: white;
-      padding: 20px 10px;
       text-align: center;
-      border-bottom-left-radius: 25px;
-      border-bottom-right-radius: 25px;
+      padding: 25px 10px 50px;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      position: relative;
     }
 
     header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 5px;
+      font-size: 1.7rem;
+      font-weight: 600;
     }
 
     header p {
@@ -549,110 +534,156 @@
       opacity: 0.9;
     }
 
+    /* CARD SECTION */
     main {
-      padding: 20px 15px;
-      text-align: center;
+      flex: 1;
+      padding: 15px;
+      margin-top: -40px;
     }
 
-    .section {
+    .card {
       background: white;
-      margin: 15px auto;
+      border-radius: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom: 18px;
       padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 500px;
+      transition: 0.3s;
     }
 
-    .section h2 {
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .card h2 {
       color: #0059ff;
+      font-size: 1.1rem;
       margin-bottom: 10px;
-      font-size: 1.2rem;
     }
 
-    .section p {
-      font-size: 0.95rem;
+    .card p {
       color: #333;
-      margin-bottom: 15px;
+      font-size: 0.95rem;
     }
 
-    .cta {
-      display: inline-block;
-      background: #0059ff;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-size: 1rem;
+    /* NAVBAR BAWAH */
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    nav a {
+      text-align: center;
       text-decoration: none;
-      box-shadow: 0 3px 8px rgba(0, 89, 255, 0.3);
-      transition: 0.3s ease;
+      color: #777;
+      font-size: 0.8rem;
+      transition: 0.3s;
     }
 
-    .cta:hover {
-      background: #0045cc;
-      box-shadow: 0 5px 12px rgba(0, 89, 255, 0.4);
+    nav a.active {
+      color: #0059ff;
+      font-weight: 600;
+    }
+
+    nav i {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+    }
+
+    /* TOMBOL MELAYANG */
+    .fab {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background: #00c853;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 12px rgba(0,200,83,0.4);
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .fab:hover {
+      background: #00b44a;
+      transform: scale(1.05);
     }
 
     footer {
-      background: #0e1628;
-      color: white;
-      padding: 20px 10px;
       text-align: center;
+      padding: 20px;
+      color: #555;
       font-size: 0.85rem;
-      margin-top: 25px;
     }
 
-    footer a {
-      color: #00c6ff;
-      text-decoration: none;
-    }
-
-    /* RESPONSIVE MOBILE */
     @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
-      .section {
-        padding: 15px;
-      }
-      .cta {
-        padding: 10px 18px;
-        font-size: 0.9rem;
-      }
+      header h1 {font-size: 1.5rem;}
+      .card {padding: 18px;}
+      nav i {font-size: 1.2rem;}
     }
   </style>
-</head>
 
+  <!-- ICONS -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
 <body>
+
   <header>
     <h1>Rekberinaja</h1>
     <p>Rekening Bersama Aman dan Terpercaya</p>
   </header>
 
   <main>
-    <div class="section">
-      <h2>Transaksi Aman, Cepat & Terpercaya</h2>
-      <p>Kami menjadi perantara terpercaya dalam transaksi jual beli online agar kedua pihak merasa aman dan nyaman.</p>
-      <a href="https://wa.me/6289531332329" target="_blank" class="cta">Chat WhatsApp</a>
+    <div class="card">
+      <h2>🔒 Transaksi Aman</h2>
+      <p>Kami memastikan transaksi Anda berjalan aman dengan sistem rekening bersama terpercaya.</p>
     </div>
 
-    <div class="section">
-      <h2>Layanan Kami</h2>
-      <p>✔️ Rekber Jual Beli Akun Game<br>
-         ✔️ Rekber Digital Product<br>
-         ✔️ Rekber Freelance dan Jasa Online</p>
+    <div class="card">
+      <h2>⚡ Proses Cepat</h2>
+      <p>Admin aktif setiap hari untuk membantu kelancaran proses transaksi Anda.</p>
     </div>
 
-    <div class="section">
-      <h2>Kenapa Pilih Rekberinaja?</h2>
-      <p>✅ Proses cepat & mudah<br>
-         ✅ Admin aktif 24 jam<br>
-         ✅ Bukti transaksi real<br>
-         ✅ Aman & transparan</p>
+    <div class="card">
+      <h2>💬 Testimoni Pengguna</h2>
+      <p>Ratusan transaksi sukses! Lihat ulasan pelanggan kami di Facebook.</p>
     </div>
   </main>
 
+  <a href="https://wa.me/6289531332329" class="fab" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <nav>
+    <a href="#" class="active">
+      <i class="fas fa-home"></i>Beranda
+    </a>
+    <a href="#layanan">
+      <i class="fas fa-briefcase"></i>Layanan
+    </a>
+    <a href="#profil">
+      <i class="fas fa-user"></i>Profil
+    </a>
+  </nav>
+
   <footer>
-    <p>© 2025 Rekberinaja | <a href="https://rekberinaja.github.io/">rekberinaja.github.io</a></p>
+    © 2025 Rekberinaja • Aman, Cepat & Terpercaya
   </footer>
+
 </body>
 </html>
