@@ -1,728 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jasa Rekber Produk Digital</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REKBERINAJA - Transaksi Aman & Cepat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: "Poppins", sans-serif;
-      background: #eaf6ff;
-      margin: 0;
-      padding: 0;
-      color: #333;
+      background-color: #f8f9fa;
+      color: #212529;
+      scroll-behavior: smooth;
     }
-
     header {
+      background: linear-gradient(135deg, #0d6efd, #007bff);
+      color: white;
       text-align: center;
-      background: linear-gradient(90deg, #3aa8ff, #007bff);
-      color: white;
-      padding: 20px 10px;
-      border-bottom-left-radius: 30px;
-      border-bottom-right-radius: 30px;
+      padding: 1.5rem 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-
     header h1 {
-      margin: 0;
-      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
-
     header p {
-      margin: 5px 0 0;
-      font-size: 14px;
+      margin-top: -5px;
+      font-size: 1rem;
+      font-style: italic;
     }
-
-    .menu {
-      display: flex;
-      justify-content: space-around;
-      margin: 30px 0;
-      flex-wrap: wrap;
+    section {
+      padding: 2rem 1rem;
     }
-
-    .menu button {
-      background: #007bff;
-      color: white;
+    .btn-primary {
+      background-color: #0d6efd;
       border: none;
-      padding: 14px 25px;
-      border-radius: 15px;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: 0.3s;
     }
-
-    .menu button:hover {
-      background: #005fcc;
-      transform: translateY(-2px);
+    .btn-primary:hover {
+      background-color: #0b5ed7;
     }
-
-    /* Popup Form */
-    .popup {
-      display: none;
+    .bottom-nav {
       position: fixed;
-      top: 0;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.4);
-      z-index: 10;
-      justify-content: center;
-      align-items: center;
-      overflow-y: auto;
-    }
-
-    .popup-content {
       background: white;
-      padding: 20px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      animation: popIn 0.3s ease;
-      position: relative;
-      margin: 30px auto;
-      overflow-y: auto;
-      max-height: 90vh;
+      border-top: 1px solid #dee2e6;
+      display: flex;
+      justify-content: space-around;
+      padding: .5rem 0;
+      z-index: 1000;
     }
-
-    @keyframes popIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    label {
-      font-weight: 600;
-      font-size: 14px;
-      margin-top: 10px;
-      display: block;
-    }
-
-    .popup-content input,
-    .popup-content select {
-      width: 100%;
-      padding: 10px;
-      margin: 6px 0 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-      background: #f8fbff;
-    }
-
-    .popup-content button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-      transition: 0.3s;
-    }
-
-    .popup-content button:hover {
-      background: #005fcc;
-    }
-
-    .note {
-      font-size: 12px;
-      background: #f1faff;
-      padding: 8px;
-      border-radius: 6px;
-      margin-top: -5px;
-      margin-bottom: 10px;
-      color: #007bff;
-      line-height: 1.4;
-    }
-
-    .close-btn {
-      background: #ff4d4d;
-    }
-
-    footer {
+    .bottom-nav a {
       text-align: center;
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 15px;
+      color: #0d6efd;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .bottom-nav a:hover {
+      color: #0b5ed7;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>💳 Jasa Rekber Produk Digital</h1>
-    <p>Aman, Cepat, dan Terpercaya</p>
+    <h1>REKBERINAJA</h1>
+    <p>Transaksi Aman & Cepat</p>
   </header>
 
-  <div class="menu">
-    <button onclick="bukaForm('pembeli')">Saya Pembeli</button>
-    <button onclick="bukaForm('penjual')">Saya Penjual</button>
-  </div>
-
-  <!-- POPUP FORM -->
-  <div class="popup" id="formPopup">
-    <div class="popup-content">
-      <h3 id="judulForm">Form Order Rekber</h3>
-
-      <label>Nomor Pesanan</label>
-      <input type="text" id="nomorPesanan" placeholder="Masukkan 4 digit nomor pesanan">
-      <div class="note">⚠️ Masukkan nomor pesanan 4 digit dan berikan ke lawan transaksi Anda.<br>
-        Nomor pesanan harus sama agar admin mudah mengenali transaksi.</div>
-
-      <label>Nama</label>
-      <input type="text" id="nama" placeholder="Nama lengkap Anda">
-
-      <label>Jenis Produk</label>
-      <input type="text" id="jenisProduk" placeholder="Contoh: Voucher Game ML">
-
-      <label>Nilai Transaksi (Rp)</label>
-      <input type="number" id="nilaiTransaksi" placeholder="Contoh: 120000">
-
-      <label>Produk Bergaransi?</label>
-      <select id="garansi" onchange="tampilkanGaransi()">
-        <option value="Tidak">Tidak</option>
-        <option value="Ya">Ya</option>
-      </select>
-
-      <div id="garansiLama" style="display:none;">
-        <label>Lama Garansi (hari)</label>
-        <input type="number" id="lamaGaransi" placeholder="Contoh: 7">
+  <!-- HOME / FORM TRANSAKSI -->
+  <section id="home">
+    <h4 class="text-center mb-4 text-primary">Form Transaksi</h4>
+    <div class="container">
+      <div class="card shadow-sm p-4">
+        <form id="rekberForm">
+          <div class="mb-3">
+            <label class="form-label">Nomor Penjual</label>
+            <input type="text" class="form-control" id="penjual" placeholder="Masukkan nomor penjual" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nomor Pembeli</label>
+            <input type="text" class="form-control" id="pembeli" placeholder="Masukkan nomor pembeli" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Keterangan Transaksi</label>
+            <textarea class="form-control" id="keterangan" rows="3" placeholder="Contoh: Pembelian akun game, jasa desain, dll" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Kirim Transaksi</button>
+        </form>
       </div>
-
-      <div id="metodeContainer"></div>
-
-      <label>Fee Rekber ditanggung oleh:</label>
-      <select id="feeOleh" onchange="tampilkanFee()">
-        <option value="Tidak Saya">Bukan Saya</option>
-        <option value="Saya">Saya yang Menanggung</option>
-      </select>
-
-      <div id="feeJumlahContainer" style="display:none;">
-        <label>Jumlah Fee Rekber (Rp)</label>
-        <input type="number" id="feeJumlah" placeholder="Contoh: 5000">
-      </div>
-
-      <button onclick="kirimWhatsApp()">Kirim Pesanan ke Admin</button>
-      <button class="close-btn" onclick="tutupForm()">Tutup</button>
     </div>
-  </div>
+  </section>
 
-  <footer>
-    © 2025 Rekberin. All rights reserved.
-  </footer>
+  <!-- MENU BIAYA -->
+  <section id="biaya" class="bg-white">
+    <div class="container">
+      <h4 class="text-center mb-4 text-primary">Biaya Transaksi</h4>
+      <div class="card shadow-sm p-4">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Transaksi di bawah Rp100.000 → Rp5.000</li>
+          <li class="list-group-item">Transaksi Rp100.000 - Rp500.000 → Rp10.000</li>
+          <li class="list-group-item">Transaksi Rp500.000 - Rp1.000.000 → Rp15.000</li>
+          <li class="list-group-item">Transaksi di atas Rp1.000.000 → 2% dari total transaksi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak">
+    <div class="container">
+      <h4 class="text-center mb-4 text-primary">Hubungi Admin</h4>
+      <div class="card shadow-sm p-4">
+        <p class="text-center mb-3">Punya pertanyaan? Kirim pesan langsung ke Admin di WhatsApp.</p>
+        <div class="text-center mb-3">
+          <a href="https://wa.me/6281262433533" target="_blank" class="btn btn-success w-100 mb-3">Kirim Pesan ke Admin</a>
+          <a href="https://www.facebook.com/share/p/1FTPoh34Wf/" target="_blank" class="btn btn-primary w-100">Lihat Testimoni di Facebook</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAVIGASI BAWAH -->
+  <nav class="bottom-nav">
+    <a href="#home">🏠 Home</a>
+    <a href="#biaya">💰 Biaya</a>
+    <a href="#kontak">📞 Kontak</a>
+  </nav>
 
   <script>
-    const adminNumber = "6281262433533";
-    let role = "";
+    document.getElementById("rekberForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const penjual = document.getElementById("penjual").value;
+      const pembeli = document.getElementById("pembeli").value;
+      const keterangan = document.getElementById("keterangan").value;
 
-    function bukaForm(tipe) {
-      role = tipe;
-      const popup = document.getElementById('formPopup');
-      popup.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // Cegah scroll di background
+      const pesan = `Halo Admin, saya ingin membuat transaksi melalui REKBERINAJA.%0A
+📦 *Data Transaksi:*%0A
+- Nomor Penjual: ${penjual}%0A
+- Nomor Pembeli: ${pembeli}%0A
+- Keterangan: ${keterangan}`;
 
-      document.getElementById('judulForm').textContent =
-        tipe === 'pembeli' ? 'Form Pembeli - Order Rekber' : 'Form Penjual - Order Rekber';
-
-      const metodeHTML = tipe === 'pembeli'
-        ? `<label>Metode Bayar</label>
-           <select id="metodeBayar">
-             <option value="Qris">QRIS</option>
-           </select>`
-        : `<label>Rekening / E-Wallet Pencairan</label>
-           <input type="text" id="metodeBayar" placeholder="Masukkan No Rekening / E-Wallet">`;
-
-      document.getElementById('metodeContainer').innerHTML = metodeHTML;
-    }
-
-    function tutupForm() {
-      document.getElementById('formPopup').style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-
-    function tampilkanGaransi() {
-      const garansi = document.getElementById('garansi').value;
-      document.getElementById('garansiLama').style.display = garansi === 'Ya' ? 'block' : 'none';
-    }
-
-    function tampilkanFee() {
-      const feeOleh = document.getElementById('feeOleh').value;
-      document.getElementById('feeJumlahContainer').style.display = feeOleh === 'Saya' ? 'block' : 'none';
-    }
-
-    function kirimWhatsApp() {
-      const nomorPesanan = document.getElementById("nomorPesanan").value.trim();
-      const nama = document.getElementById("nama").value.trim();
-      const jenisProduk = document.getElementById("jenisProduk").value.trim();
-      const nilaiTransaksi = document.getElementById("nilaiTransaksi").value.trim();
-      const garansi = document.getElementById("garansi").value;
-      const lamaGaransi = document.getElementById("lamaGaransi").value.trim();
-      const metodeBayar = document.getElementById("metodeBayar").value.trim();
-      const feeOleh = document.getElementById("feeOleh").value;
-      const feeJumlah = document.getElementById("feeJumlah").value.trim();
-
-      if (!nomorPesanan || !nama || !jenisProduk || !nilaiTransaksi) {
-        alert("⚠️ Harap isi semua data penting sebelum mengirim!");
-        return;
-      }
-
-      const pesan =
-        `📦 *Form Order Jasa Rekber (${role.toUpperCase()})*\n\n` +
-        `🧾 Nomor Pesanan: ${nomorPesanan}\n` +
-        `👤 Nama: ${nama}\n` +
-        `💻 Produk: ${jenisProduk}\n` +
-        `💰 Nilai Transaksi: Rp${nilaiTransaksi}\n` +
-        `🛡️ Produk Bergaransi: ${garansi}${garansi === "Ya" ? ` (${lamaGaransi} hari)` : ""}\n` +
-        `${role === "pembeli" ? `💳 Metode Bayar: ${metodeBayar}` : `🏦 Rekening/E-Wallet: ${metodeBayar}`}\n\n` +
-        `💸 Fee Rekber: ${feeOleh}${feeOleh === "Saya" ? ` (Rp${feeJumlah})` : ""}\n\n` +
-        `Mohon dibuatkan grup rekber untuk transaksi ini.`;
-
-      const url = `https://wa.me/${adminNumber}?text=${encodeURIComponent(pesan)}`;
-      window.open(url, "_blank");
-    }
+      const waUrl = `https://wa.me/6281262433533?text=${pesan}`;
+      window.open(waUrl, "_blank");
+    });
   </script>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biaya Transaksi - Rekberinaja</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f8f9ff;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 500px;
-      margin: 50px auto;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    .header {
-      background: linear-gradient(135deg, #0056ff, #007bff);
-      color: white;
-      padding: 20px;
-      font-size: 1.3rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .header::before {
-      content: "💰";
-      font-size: 1.5rem;
-    }
-    .content {
-      padding: 20px;
-    }
-    h2 {
-      font-size: 1rem;
-      color: #444;
-      margin-bottom: 15px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    li {
-      background: #f1f4ff;
-      border: 1px solid #e0e5ff;
-      border-radius: 10px;
-      padding: 12px 15px;
-      margin-bottom: 10px;
-    }
-    li strong {
-      color: #0056ff;
-    }
-    .breadcrumb {
-      font-size: 0.85rem;
-      color: #777;
-      padding: 15px 20px 0;
-    }
-    .breadcrumb a {
-      color: #0056ff;
-      text-decoration: none;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <div class="breadcrumb">
-      <a href="#">Member Area</a> / <span>Biaya Transaksi</span>
-    </div>
-
-    <div class="header">
-      Biaya Transaksi
-    </div>
-
-    <div class="content">
-      <ul>
-        <li><strong>Biaya</strong><br>Transaksi 50 RB - 99 RB = Rp. 5.000</li>
-        <li><strong>Biaya</strong><br>Transaksi 100 RB - 999 RB = Rp. 10.000</li>
-        <li><strong>Biaya</strong><br>Transaksi 1 JT - 9.999 JT = Rp. 20.000</li>
-        <li><strong>Biaya</strong><br>Transaksi 10 JT - 19.999 JT = Rp. 35.000</li>
-        <li><strong>Biaya</strong><br>Transaksi 20 JT - 39.999 JT = Rp. 50.000</li>
-        <li><strong>Biaya</strong><br>Transaksi 40 JT - 100 JT = Rp. 100.000</li>
-        <li><strong>Biaya</strong><br>Transaksi di atas 100 JT = 0.2%</li>
-      </ul>
-    </div>
-  </div>
-
-</body>
-</html>
-</body>
-</html>
-<!-- PROFIL ADMIN -->
-  <section style="text-align:center; margin:40px 15px; background:white; border-radius:20px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:20px;">
-    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilVLbn175XWOXs2T5L4FSyOuaxkbdOGdliRbbK5aPAcbe1bIWEAko3tvG7LEC1zkmuP5esoB5Q8Ez9JPd6mPerB8dWkAJCAKhqpBbWPHw6p3-VAsS728cFSLnaXiBRTM4qcgWuNKcokEoBeSMyR6TE-cgrOcP79mHduy-2erIRKdazh4b9sSh2YTCTboHv/s320/IMG_20250911_201506.jpg" 
-         alt="Foto Feri Pradana" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:4px solid #007bff;">
-    <h2 style="margin-top:15px; color:#007bff;">Feri Pradana</h2>
-    <p style="font-size:14px; color:#555; line-height:1.6; margin:10px auto; max-width:500px;">
-      Admin & Pendiri layanan <b>Rekberinaja</b> — penyedia jasa rekening bersama terpercaya untuk transaksi digital. <br>
-      Berdomisili di <b>Riau, Kabupaten Rokan Hulu</b>, Kecamatan <b>Ujung Batu</b>, Desa <b>Pematang Tebih</b>, Jl. Lubuk Bendahara, <b>Sukamaju</b>.
-    </p>
-    <hr style="width:60%; margin:20px auto; border:1px solid #e0e0e0;">
-
-    <div style="text-align:left; max-width:600px; margin:auto;">
-      <h3 style="color:#007bff; text-align:center;">Visi</h3>
-      <p style="font-size:14px; color:#444; text-align:center; margin-bottom:20px;">
-        Menjadi layanan rekening bersama digital yang <b>aman, jujur, cepat, dan terpercaya</b> bagi seluruh pengguna di Indonesia.
-      </p>
-
-      <h3 style="color:#007bff; text-align:center;">Misi</h3>
-      <ul style="list-style:none; padding:0; font-size:14px; color:#444; line-height:1.6;">
-        <li>✅ Menjamin keamanan setiap transaksi antara pembeli dan penjual.</li>
-        <li>✅ Memberikan layanan cepat dan responsif sepanjang waktu.</li>
-        <li>✅ Membangun kepercayaan jangka panjang melalui transparansi penuh.</li>
-        <li>✅ Mendukung ekosistem jual beli digital yang sehat dan aman.</li>
-      </ul>
-    </div>
-  </section>
-    <!-- TESTIMONI FACEBOOK -->
-  <section style="margin:30px 15px; text-align:center;">
-    <div style="background:linear-gradient(135deg, #007bff, #3aa8ff); border-radius:20px; color:white; padding:25px; box-shadow:0 4px 12px rgba(0,0,0,0.15); max-width:600px; margin:auto;">
-      <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook Icon" style="width:30px; height:30px;">
-        <h3 style="margin:0; font-size:18px;">Testimoni Pelanggan</h3>
-      </div>
-      <p style="font-size:14px; line-height:1.6; margin:15px auto; max-width:500px;">
-        Lihat berbagai testimoni nyata dari pelanggan yang telah melakukan transaksi melalui layanan <b>Rekberinaja</b>.
-        Bukti kepuasan dan kepercayaan pengguna kami menjadi dasar semangat kami untuk terus melayani dengan aman dan profesional.
-      </p>
-      <a href="https://www.facebook.com/share/p/16MJTvsbgF/" target="_blank" 
-         style="display:inline-block; background:white; color:#007bff; padding:10px 25px; border-radius:30px; font-weight:600; text-decoration:none; transition:0.3s; box-shadow:0 3px 8px rgba(0,0,0,0.2);">
-         💬 Lihat Testimoni di Facebook
-      </a>
-    </div>
-  </section>
-<!DOCTYPE html><html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>APA KATA MEREKA - Rekberinaja</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background: #f8fbff;
-      color: #333;
-      overflow-x: hidden;
-    }.testi-section {
-  text-align: center;
-  padding: 50px 20px;
-}
-
-.testi-section h2 {
-  font-size: 2rem;
-  color: #007bff;
-  margin-bottom: 40px;
-  font-weight: 700;
-}
-
-.slider {
-  display: flex;
-  transition: transform 1s ease;
-}
-
-.slider-container {
-  overflow: hidden;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.testi-card {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 0 10px;
-  flex: 0 0 calc(33.333% - 20px);
-  box-sizing: border-box;
-}
-
-.testi-name {
-  font-weight: 600;
-  color: #007bff;
-  margin-top: 10px;
-}
-
-.testi-text {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #555;
-}
-
-.facebook-link {
-  margin-top: 40px;
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: #1877f2;
-  font-weight: 600;
-}
-
-.facebook-link img {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-}
-
-@media (max-width: 768px) {
-  .testi-card {
-    flex: 0 0 100%;
-    margin: 0 5px;
-  }
-}
-
-  </style>
-</head>
-<body>
-  <section class="testi-section">
-    <h2>APA KATA MEREKA</h2><div class="slider-container">
-  <div class="slider" id="slider">
-    <div class="testi-card">
-      <p class="testi-text">"Pelayanan cepat dan aman. Transaksi saya berjalan lancar tanpa kendala. Recomended banget!"</p>
-      <p class="testi-name">— Budi Santoso</p>
-    </div>
-    <div class="testi-card">
-      <p class="testi-text">"Awalnya ragu pakai jasa rekber, tapi setelah coba Rekberinaja ternyata terpercaya dan responsif!"</p>
-      <p class="testi-name">— Siti Rahmawati</p>
-    </div>
-    <div class="testi-card">
-      <p class="testi-text">"Sudah beberapa kali transaksi di sini, semuanya aman dan supportnya juga cepat!"</p>
-      <p class="testi-name">— Andi Pratama</p>
-    </div>
-    <div class="testi-card">
-      <p class="testi-text">"Desain websitenya bagus, mudah dipakai dan bikin nyaman waktu transaksi."</p>
-      <p class="testi-name">— Rina Kurnia</p>
-    </div>
-    <div class="testi-card">
-      <p class="testi-text">"Adminnya ramah banget, bantuin saya sampai transaksi selesai. Terima kasih Rekberinaja!"</p>
-      <p class="testi-name">— Dedi Saputra</p>
-    </div>
-    <div class="testi-card">
-      <p class="testi-text">"Rekberinaja jadi solusi pas buat jual beli akun dengan aman. Bakal pakai terus!"</p>
-      <p class="testi-name">— Maya Putri</p>
-    </div>
-  </div>
-</div>
-
-<a href="https://www.facebook.com/share/p/16MJTvsbgF/" target="_blank" class="facebook-link">
-  <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook Icon">Lihat Testimoni di Facebook
-</a>
-
-  </section>  <script>
-    const slider = document.getElementById('slider');
-    const cards = document.querySelectorAll('.testi-card');
-    const total = cards.length;
-    let index = 0;
-
-    function slide() {
-      const visible = window.innerWidth <= 768 ? 1 : 3;
-      const maxIndex = Math.ceil(total / visible) - 1;
-      index = (index + 1) > maxIndex ? 0 : index + 1;
-      const move = -(index * 100);
-      slider.style.transform = `translateX(${move}%)`;
-    }
-
-    function resizeFix() {
-      slider.style.transform = 'translateX(0)';
-      index = 0;
-    }
-
-    setInterval(slide, 4000);
-    window.addEventListener('resize', resizeFix);
-  </script></body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#007bff" />
-  <title>Rekberin — Jasa Rekening Bersama Produk Digital</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background-color: #f2f6ff;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      background: linear-gradient(135deg, #007bff, #00b4ff);
-      color: white;
-      text-align: center;
-      padding: 1.2rem;
-      font-weight: bold;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: relative;
-    }
-
-    .icon-btn {
-      position: absolute;
-      right: 15px;
-      top: 15px;
-      background: rgba(255, 255, 255, 0.15);
-      border: none;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      color: white;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .content {
-      flex: 1;
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .greeting {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #007bff;
-      margin-bottom: 1rem;
-    }
-
-    h1 {
-      font-size: 1.1rem;
-      line-height: 1.4;
-      color: #fff;
-    }
-
-    .btn-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .btn {
-      flex: 1;
-      background: #007bff;
-      color: #fff;
-      border: none;
-      padding: 12px 0;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
-      transition: transform 0.2s ease;
-    }
-
-    .btn:active {
-      transform: scale(0.97);
-    }
-
-    .profile-card {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      padding: 20px;
-      margin-top: 10px;
-    }
-
-    .profile-img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #007bff;
-      margin-bottom: 15px;
-    }
-
-    .profile-name {
-      font-size: 1.3rem;
-      color: #007bff;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .profile-desc {
-      font-size: 0.95rem;
-      color: #444;
-      line-height: 1.6;
-    }
-
-    footer {
-      text-align: center;
-      padding: 0.8rem;
-      background: #fff;
-      font-size: 0.8rem;
-      color: #777;
-      border-top: 1px solid #eee;
-    }
-
-    @media (max-width: 600px) {
-      .btn-container {
-        flex-direction: column;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <button class="icon-btn">⤴</button>
-    <h1>Rekberin — Jasa Rekening Bersama<br>Produk Digital</h1>
-  </header>
-
-  <div class="content">
-    <div class="greeting">Oke Bos!</div>
-
-    <p>Pilih peran kamu untuk memulai transaksi Rekber:</p>
-
-    <div class="btn-container">
-      <button class="btn">Saya Pembeli</button>
-      <button class="btn">Saya Penjual</button>
-    </div>
-
-    <div class="profile-card">
-      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilVLbn175XWOXs2T5L4FSyOuaxkbdOGdliRbbK5aPAcbe" alt="Foto Admin" class="profile-img" />
-      <div class="profile-name">Feri Pradana</div>
-      <div class="profile-desc">
-        Admin & Pendiri layanan <b>Rekberinaja</b> — penyedia jasa rekening bersama terpercaya untuk transaksi digital.<br>
-        Berdomisili di <b>Riau, Kabupaten Rokan Hulu</b>, Kecamatan <b>Ujung Batu</b>.
-      </div>
-    </div>
-  </div>
-
-  <footer>© 2025 Rekberinaja • Aman, Cepat & Terpercaya</footer>
 
 </body>
 </html>
