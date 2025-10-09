@@ -6,277 +6,275 @@
   <title>REKBERINAJA - Web App</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-  <circle cx='50' cy='50' r='48' fill='%231e8cff'/>
-  <text x='50' y='65' font-size='60' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>R.</text>
-  </svg>">
   <style>
     :root {
-      --light-blue: #e6f2ff;
-      --accent: #1e8cff;
+      --biru: #1e8cff;
+      --biru-muda: #e6f2ff;
     }
     body {
-      background: linear-gradient(180deg, var(--light-blue), #fff);
-      min-height: 100vh;
+      background: linear-gradient(180deg, var(--biru-muda), #fff);
       font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
       padding-bottom: 80px;
     }
-    .app-shell { max-width: 980px; margin: 1rem auto; }
     .banner {
-      background: linear-gradient(90deg, var(--accent), #4fb0ff);
+      background: var(--biru);
       color: white;
       padding: 1rem;
-      border-radius: .75rem;
       text-align: center;
-      font-weight: 700;
-      letter-spacing: .5px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: .5rem;
     }
-    .banner img {
-      width: 36px; height: 36px;
+    .banner-logo {
+      background: white;
+      color: var(--biru);
       border-radius: 50%;
-      background: white;
-    }
-    .card-soft {
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 6px 18px rgba(30,140,255,0.08);
-      padding: 1rem;
-    }
-    .input-with-prefix { display: flex; }
-    .phone-prefix {
-      background: #f0f7ff;
-      border-right: 1px solid #e6f2ff;
-      padding: .375rem .5rem;
-      border-radius: .375rem 0 0 .375rem;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.1rem;
     }
     .bottom-nav {
-      position: fixed; left: 0; right: 0; bottom: 0;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
       background: #fff;
-      border-top: 1px solid #eee;
-      box-shadow: 0 -6px 18px rgba(0,0,0,.05);
-      display: flex; justify-content: space-around;
-      padding: .4rem 0; z-index: 999;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: .4rem 0;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
     }
     .nav-item {
-      flex: 1; text-align: center; color: var(--accent); font-size: .85rem;
+      flex: 1;
+      text-align: center;
+      color: var(--biru);
+      font-size: .8rem;
     }
     .nav-item svg {
       width: 22px; height: 22px; display: block; margin: 0 auto 4px;
     }
-    .nav-item.active { color: #0d6efd; font-weight: 600; }
-    .map-iframe { width: 100%; height: 300px; border: 0; border-radius: .5rem; }
-    .required { color: #d00; }
+    .map-iframe {
+      width: 100%; height: 280px; border: 0; border-radius: 8px;
+    }
     @media (max-width: 576px) {
-      .modal-fullscreen-sm-down { min-height: 100vh; margin: 0; border-radius: 0; }
       .modal-fullscreen-sm-down .modal-content { border-radius: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="container app-shell">
+
+  <div class="container py-3">
     <div class="banner mb-3">
-      <img src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-          <circle cx='50' cy='50' r='48' fill='%231e8cff'/>
-          <text x='50' y='65' font-size='60' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>R.</text>
-        </svg>">
-      <span>REKBERINAJA AMAN DAN CEPAT</span>
+      <div class="banner-logo">RAJ</div>
+      <span>REKBERINAJA AMAN DAN CEPAT untuk semua transaksi</span>
     </div>
 
-    <div class="card card-soft mb-3">
+    <div class="text-center mb-3">
+      <button class="btn btn-primary btn-lg" id="mulaiBtn">Mulai Transaksi</button>
+    </div>
+
+    <div class="card p-3 mb-4">
       <h5>Instruksi Transaksi</h5>
       <ol>
-        <li>Klik <strong>Mulai Transaksi</strong> untuk mengisi Form Transaksi REKBERINAJA.</li>
-        <li>Isi Nama Pembeli & Penjual serta nomor WhatsApp (otomatis +62).</li>
-        <li>Masukkan nominal transaksi (wajib). Sistem menghitung fee otomatis.</li>
-        <li>Aktifkan lokasi agar peta menampilkan titik transaksi otomatis.</li>
-        <li>Tambahkan deskripsi (contoh: akun game) lalu kirim ke admin via WhatsApp.</li>
+        <li>Klik tombol <b>Mulai Transaksi</b>.</li>
+        <li>Isi nama pembeli, penjual, dan nomor WhatsApp (+62 otomatis).</li>
+        <li>Masukkan nominal transaksi — sistem menghitung fee otomatis.</li>
+        <li>Set lokasi transaksi (wajib) agar muncul di peta dan dikirim ke admin.</li>
+        <li>Tulis deskripsi transaksi (contoh: Akun Game Mobile Legends).</li>
+        <li>Klik “Kirim ke Admin” untuk mengirim detail ke WhatsApp admin.</li>
       </ol>
     </div>
 
-    <div class="d-grid gap-2 mb-3">
-      <button class="btn btn-primary btn-lg" id="startTx">Mulai Transaksi</button>
-    </div>
-
-    <!-- Testimoni -->
-    <div class="card card-soft mb-3" id="testimoni">
-      <h5>Testimoni</h5>
-      <div id="testimoniCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- TESTIMONI -->
+    <div class="card p-3 mb-4" id="testimoni">
+      <h5>Testimoni Pengguna</h5>
+      <div id="testiCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner" id="carouselInner"></div>
       </div>
-      <div class="mt-2 text-center">
-        <a href="https://www.facebook.com/share/p/1FTPoh34Wf/" target="_blank">Lihat testimoni lainnya di Facebook</a>
-      </div>
+      <p class="mt-2 text-center">
+        <a href="https://www.facebook.com/share/p/1FTPoh34Wf/" target="_blank">Lihat testimoni lain di Facebook</a>
+      </p>
     </div>
 
-    <!-- Profil -->
-    <div class="card card-soft mb-5" id="profil">
-      <h5>Profil REKBERINAJA</h5>
+    <!-- PROFIL -->
+    <div class="card p-3" id="profil">
+      <h5>Profil Rekberinaja</h5>
       <div class="text-center">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilVLbn175XWOXs2T5L4FSyOuaxkbdOGdliRbbK5aPAcbe1bIWEAko3tvG7LEC1zkmuP5esoB5Q8Ez9JPd6mPerB8dWkAJCAKhqpBbWPHw6p3-VAsS728cFSLnaXiBRTM4qcgWuNKcokEoBeSMyR6TE-cgrOcP79mHduy-2erIRKdazh4b9sSh2YTCTboHv/s981/IMG_20250911_201506.jpg" class="rounded-circle mb-2" width="120">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilVLbn175XWOXs2T5L4FSyOuaxkbdOGdliRbbK5aPAcbe1bIWEAko3tvG7LEC1zkmuP5esoB5Q8Ez9JPd6mPerB8dWkAJCAKhqpBbWPHw6p3-VAsS728cFSLnaXiBRTM4qcgWuNKcokEoBeSMyR6TE-cgrOcP79mHduy-2erIRKdazh4b9sSh2YTCTboHv/s981/IMG_20250911_201506.jpg"
+             class="rounded-circle mb-2" width="120">
         <h6>FERI PRADANA</h6>
-        <p><strong>RIAU</strong> - KABUPATEN ROKANHULU, UJUNGBATU</p>
+        <p>RIAU - KABUPATEN ROKANHULU, UJUNGBATU,<br>JL. LUBUK BENDAHARA, SUKAMAJU</p>
         <h6>Visi</h6>
-        <p>Layanan rekening bersama aman, cepat, terpercaya untuk semua transaksi.</p>
+        <p>Menyediakan layanan rekening bersama aman, cepat, dan terpercaya.</p>
         <h6>Misi</h6>
         <ul class="text-start">
           <li>Menjamin keamanan dana hingga transaksi selesai.</li>
-          <li>Menyederhanakan proses escrow bagi pembeli dan penjual.</li>
-          <li>Layanan transparan dan responsif.</li>
+          <li>Memberikan layanan transparan dan cepat tanggap.</li>
+          <li>Mendukung transaksi online aman bagi semua pengguna.</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- Modal Transaksi -->
-  <div class="modal fade" id="txModal" tabindex="-1">
+  <!-- MODAL TRANSAKSI -->
+  <div class="modal fade" id="formModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Form Transaksi REKBERINAJA</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form id="txForm">
             <div class="row g-3">
               <div class="col-md-6">
-                <label class="form-label">Nama Pembeli</label>
-                <input class="form-control" id="buyerName" required>
+                <label>Nama Pembeli</label>
+                <input id="buyerName" class="form-control" required>
               </div>
               <div class="col-md-6">
-                <label class="form-label">Nomor WhatsApp Pembeli</label>
-                <div class="input-with-prefix">
-                  <span class="phone-prefix">+62</span>
-                  <input class="form-control" id="buyerPhone" placeholder="8xxxxxxxx" required>
+                <label>No. WhatsApp Pembeli</label>
+                <div class="input-group">
+                  <span class="input-group-text">+62</span>
+                  <input id="buyerPhone" class="form-control" required>
                 </div>
               </div>
               <div class="col-md-6">
-                <label class="form-label">Nama Penjual</label>
-                <input class="form-control" id="sellerName" required>
+                <label>Nama Penjual</label>
+                <input id="sellerName" class="form-control" required>
               </div>
               <div class="col-md-6">
-                <label class="form-label">Nomor WhatsApp Penjual</label>
-                <div class="input-with-prefix">
-                  <span class="phone-prefix">+62</span>
-                  <input class="form-control" id="sellerPhone" placeholder="8xxxxxxxx" required>
+                <label>No. WhatsApp Penjual</label>
+                <div class="input-group">
+                  <span class="input-group-text">+62</span>
+                  <input id="sellerPhone" class="form-control" required>
                 </div>
               </div>
               <div class="col-md-6">
-                <label class="form-label">Nominal Transaksi *</label>
-                <input class="form-control" id="nominal" required>
+                <label>Nominal Transaksi</label>
+                <input id="nominal" class="form-control" required>
               </div>
               <div class="col-md-6">
-                <label class="form-label">Fee Rekber</label>
-                <input class="form-control" id="fee" readonly>
+                <label>Fee Rekber</label>
+                <input id="fee" class="form-control" readonly>
               </div>
               <div class="col-12">
-                <label class="form-label">Deskripsi</label>
-                <textarea class="form-control" id="desc" rows="2"></textarea>
+                <label>Deskripsi Transaksi</label>
+                <textarea id="desc" class="form-control" rows="2"></textarea>
               </div>
               <div class="col-12">
-                <label class="form-label">Lokasi Transaksi</label>
-                <iframe id="mapFrame" class="map-iframe" loading="lazy" allowfullscreen></iframe>
+                <label>Lokasi Transaksi</label>
+                <iframe id="mapFrame" class="map-iframe"></iframe>
+                <button type="button" class="btn btn-outline-primary mt-2 w-100" id="setLoc">📍 Set Lokasi Transaksi</button>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button class="btn btn-success" id="sendAdmin">Kirim ke Admin</button>
+          <button class="btn btn-success" id="sendBtn">Kirim ke Admin</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Nav -->
+  <!-- BOTTOM NAV -->
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="scrollToTop()">
-      <i data-lucide="home"></i><span>Home</span>
-    </div>
-    <div class="nav-item" onclick="document.querySelector('#testimoni').scrollIntoView({behavior:'smooth'})">
-      <i data-lucide="message-circle"></i><span>Testimoni</span>
-    </div>
-    <div class="nav-item" onclick="document.querySelector('#profil').scrollIntoView({behavior:'smooth'})">
-      <i data-lucide="user"></i><span>Profil</span>
-    </div>
+    <div class="nav-item" onclick="scrollToTop()"><i data-lucide='home'></i>Home</div>
+    <div class="nav-item" onclick="document.querySelector('#testimoni').scrollIntoView({behavior:'smooth'})"><i data-lucide='message-circle'></i>Testimoni</div>
+    <div class="nav-item" onclick="document.querySelector('#profil').scrollIntoView({behavior:'smooth'})"><i data-lucide='user'></i>Profil</div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     lucide.createIcons();
-    const adminNumber='6281262433533';
 
-    function calcFee(n){
-      n=Number(n);
-      if(n<=50000)return 2000;
-      if(n<=100000)return 5000;
-      if(n<=500000)return 10000;
-      if(n<=1000000)return 15000;
-      if(n<=9999000)return 20000;
-      if(n<=50000000)return 25000;
-      return 50000;
+    const adminNumber = '6281262433533';
+
+    function calcFee(n) {
+      n = Number(n);
+      if (n >= 10000 && n <= 50000) return 2000;
+      if (n <= 100000) return 5000;
+      if (n <= 500000) return 10000;
+      if (n <= 1000000) return 15000;
+      if (n <= 9999000) return 20000;
+      if (n <= 50000000) return 25000;
+      if (n <= 99999000) return 50000;
+      return 0;
     }
 
-    document.getElementById('startTx').onclick=()=>{
-      new bootstrap.Modal('#txModal').show();
-      getLocation(); // jalankan GPS otomatis
+    document.getElementById('mulaiBtn').onclick = () => {
+      new bootstrap.Modal('#formModal').show();
     };
 
-    document.getElementById('nominal').oninput=e=>{
-      const v=e.target.value.replace(/[^0-9]/g,'');
-      e.target.value=v;
-      document.getElementById('fee').value=calcFee(v).toLocaleString('id-ID');
+    document.getElementById('nominal').oninput = e => {
+      const val = e.target.value.replace(/\D/g, '');
+      e.target.value = val;
+      document.getElementById('fee').value = calcFee(val).toLocaleString('id-ID');
     };
 
-    document.getElementById('sendAdmin').onclick=()=>{
-      const bN=buyerName.value.trim(), bP=buyerPhone.value.trim(),
-            sN=sellerName.value.trim(), sP=sellerPhone.value.trim(),
-            nominal=nominal.value.trim(), fee=fee.value.trim(), desc=desc.value.trim();
-      if(!bN||!bP||!sN||!sP||!nominal)return alert('Lengkapi semua data.');
-      const mapLink=document.getElementById('mapFrame').src;
-      const msg=`*PESANAN REKBERINAJA*%0A🔹Pembeli: ${bN}%0A🔹WA: +62${bP}%0A🔹Penjual: ${sN}%0A🔹WA: +62${sP}%0A🔹Nominal: Rp${nominal}%0A🔹Fee: Rp${fee}%0A🔹Deskripsi: ${desc}%0A📍Lokasi: ${mapLink}`;
-      window.open(`https://wa.me/${adminNumber}?text=${msg}`,'_blank');
+    document.getElementById('setLoc').onclick = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude, lon = pos.coords.longitude;
+          const url = `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+          document.getElementById('mapFrame').src = url;
+          document.getElementById('mapFrame').dataset.url = `https://maps.google.com/?q=${lat},${lon}`;
+        });
+      } else alert("GPS tidak didukung di perangkat ini.");
     };
 
-    // Dapatkan lokasi pengguna & tampilkan di iframe
-    function getLocation(){
-      if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(pos=>{
-          const {latitude,longitude}=pos.coords;
-          const url=`https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
-          document.getElementById('mapFrame').src=url;
-        },()=>{document.getElementById('mapFrame').src="https://maps.google.com/maps?q=Riau,Indonesia&z=6&output=embed";});
-      }else{
-        document.getElementById('mapFrame').src="https://maps.google.com/maps?q=Riau,Indonesia&z=6&output=embed";
-      }
-    }
+    document.getElementById('sendBtn').onclick = () => {
+      const buyerName = document.getElementById('buyerName').value;
+      const buyerPhone = document.getElementById('buyerPhone').value;
+      const sellerName = document.getElementById('sellerName').value;
+      const sellerPhone = document.getElementById('sellerPhone').value;
+      const nominal = document.getElementById('nominal').value;
+      const fee = document.getElementById('fee').value;
+      const desc = document.getElementById('desc').value;
+      const mapLink = document.getElementById('mapFrame').dataset.url || '';
 
-    const testi=[
-      {n:'Andi Pratama',t:'Cepat, aman dan terpercaya.'},
-      {n:'Siti Nurhaliza',t:'Pelayanan ramah dan mudah.'},
-      {n:'Budi Santoso',t:'Rekberinaja sangat membantu.'},
-      {n:'Rina Marlina',t:'Fee terjangkau dan cepat.'},
-      {n:'Dedi Kurniawan',t:'Transaksi lancar tanpa khawatir.'},
-      {n:'Wawan Setiawan',t:'Rekomendasi untuk jual-beli online.'},
-      {n:'Mira Ayu',t:'Sangat membantu transaksi besar.'},
-      {n:'Rizky H',t:'Aman dan transparan.'},
-      {n:'Laras Putri',t:'UI seperti app Android!'},
-      {n:'Fajar Ramadhan',t:'Rekber profesional 👍'}
+      if (!buyerName || !buyerPhone || !sellerName || !sellerPhone || !nominal)
+        return alert('Mohon lengkapi semua data transaksi.');
+
+      const msg = `*PESANAN REKBERINAJA*%0A` +
+        `👤 Pembeli: ${buyerName}%0A📞 +62${buyerPhone}%0A` +
+        `💼 Penjual: ${sellerName}%0A📞 +62${sellerPhone}%0A` +
+        `💰 Nominal: Rp${nominal}%0A💸 Fee: Rp${fee}%0A📝 ${desc}%0A` +
+        `📍 Lokasi: ${mapLink}`;
+
+      const waUrl = `https://wa.me/${adminNumber}?text=${encodeURI(msg)}`;
+      window.open(waUrl, '_blank');
+    };
+
+    const testiData = [
+      { n: 'Andi Pratama', t: 'Transaksi aman dan cepat!' },
+      { n: 'Siti Nurhaliza', t: 'Fee murah dan pelayanan ramah.' },
+      { n: 'Budi Santoso', t: 'Sangat membantu jual beli online.' },
+      { n: 'Rina Marlina', t: 'Langsung cair setelah konfirmasi!' },
+      { n: 'Dedi Kurniawan', t: 'Terpercaya, rekomendasi banget.' },
+      { n: 'Wawan Setiawan', t: 'Sudah pakai berkali-kali, aman.' },
+      { n: 'Laras Putri', t: 'UI-nya seperti aplikasi Android.' },
+      { n: 'Rizky Hidayat', t: 'Support 24 jam keren banget.' },
+      { n: 'Mira Ayu', t: 'Proses cepat tanpa ribet.' },
+      { n: 'Fajar Ramadhan', t: 'Rekberinaja mantap 👍' }
     ];
-    const inner=document.getElementById('carouselInner');
-    testi.forEach((t,i)=>{
-      const div=document.createElement('div');
-      div.className='carousel-item'+(i===0?' active':'');
-      div.innerHTML=`<div class='p-4 text-center'><p class='mb-1'>"${t.t}"</p><p class='text-muted mb-0'>– ${t.n}</p></div>`;
-      inner.appendChild(div);
+    const carouselInner = document.getElementById('carouselInner');
+    testiData.forEach((t, i) => {
+      const div = document.createElement('div');
+      div.className = 'carousel-item' + (i === 0 ? ' active' : '');
+      div.innerHTML = `<div class="p-3 text-center"><p>"${t.t}"</p><p class="text-muted mb-0">– ${t.n}</p></div>`;
+      carouselInner.appendChild(div);
     });
 
-    function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
   </script>
 </body>
 </html>
