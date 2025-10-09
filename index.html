@@ -1,389 +1,241 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>REKBERINAJA - Aman & Cepat</title>
-
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <style>
-    :root {
-      --light-blue: #e6f8ff;
-      --accent: #0b6fa4;
-      --accent-dark: #075a84;
-    }
-    body {
-      background: linear-gradient(180deg,var(--light-blue),#ffffff);
-      color: #08354a;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      padding-bottom: 80px; /* space for bottom nav */
-    }
-
-    /* Banner */
-    .top-banner {
-      background: linear-gradient(90deg,var(--accent-dark),var(--accent));
-      color: #fff;
-      padding: 14px;
-      border-radius: 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:1rem;
-    }
-    .logo-raj {
-      background:#fff;
-      color:var(--accent);
-      font-weight:800;
-      padding:10px 14px;
-      border-radius:10px;
-      box-shadow:0 6px 18px rgba(11,111,164,0.12);
-      font-size:18px;
-    }
-
-    .card-app {
-      border-radius:14px;
-      box-shadow:0 10px 30px rgba(11,111,164,0.06);
-      overflow:hidden;
-    }
-
-    /* bottom nav (mobile-app feel) */
-    .bottom-nav {
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
-      background: #fff;
-      border-top: 1px solid #edf6fb;
-      display:flex;
-      justify-content:space-around;
-      padding:8px 6px;
-      z-index: 1100;
-    }
-    .bottom-nav a { color:var(--accent); text-decoration:none; font-weight:600; font-size:14px; display:flex;flex-direction:column;align-items:center;gap:4px;}
-    .bottom-nav a.active { color:var(--accent-dark); }
-
-    /* map frame preview */
-    .map-frame { width:140px; height:90px; border-radius:10px; overflow:hidden; border:1px solid #e6f2fa; display:flex;align-items:center;justify-content:center; background:#fafcff; font-size:12px; color:#444; }
-
-    /* sections hidden by default except active */
-    .section { display:none; }
-    .section.active { display:block; }
-
-    /* small responsiveness tweak for modal */
-    @media (max-width:576px){
-      .modal-dialog { max-width:98%; margin:0.3rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REKBERINAJA - Aman dan Cepat</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body {
+    background-color: #f8fbff;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+  }
+  .navbar {
+    background-color: #1e90ff;
+  }
+  .navbar-brand {
+    color: white !important;
+    font-weight: bold;
+  }
+  .banner {
+    background: linear-gradient(90deg, #1e90ff, #5ab4ff);
+    color: white;
+    text-align: center;
+    padding: 30px 10px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #1e90ff;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+  .bottom-nav button {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 600;
+  }
+  .card {
+    border-radius: 15px;
+  }
+  iframe {
+    border-radius: 10px;
+  }
+</style>
 </head>
 <body>
 
-  <div class="container py-4">
-
-    <!-- Header / Banner -->
-    <div class="top-banner">
-      <div>
-        <div style="font-size:18px;font-weight:700">REKBERINAJA</div>
-        <div style="font-size:13px;opacity:.9">AMAN DAN CEPAT untuk semua transaksi</div>
-      </div>
-      <div class="logo-raj">RAJ</div>
-    </div>
-
-    <!-- Home section (default visible) -->
-    <div id="homeSection" class="card card-app p-3 section active">
-      <div class="card-body">
-        <h5 class="mb-2">Instruksi Transaksi</h5>
-        <ol>
-          <li>Klik <strong>Mulai Transaksi</strong> untuk membuka form REKBERINAJA.</li>
-          <li>Isi Nama & Nomor WhatsApp Pembeli (format tanpa +62) dan Nama & Nomor Penjual.</li>
-          <li>Masukkan Nominal (wajib) — Fee akan dihitung otomatis sesuai tabel fee.</li>
-          <li><strong>Penjual wajib men-Set lokasi (GPS)</strong>; lokasi akan tampil pada preview peta dan dikirim ke admin sebagai URL.</li>
-          <li>Isi deskripsi transaksi (contoh: akun game, item, dll.).</li>
-          <li>Klik <strong>Kirim Pesanan</strong> untuk mengirim pesan otomatis ke WhatsApp Admin.</li>
-        </ol>
-
-        <div class="d-flex gap-2 mt-3">
-          <button class="btn btn-primary" id="startTrxBtn">Mulai Transaksi</button>
-          <button class="btn btn-outline-primary" onclick="showSection('testimoniSection')">Lihat Testimoni</button>
-          <button class="btn btn-outline-primary" onclick="showSection('profileSection')">Profil</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Testimoni (hidden by default) -->
-    <section id="testimoniSection" class="mt-4 section">
-      <h5>Testimoni</h5>
-
-      <div id="carouselTestimoni" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="p-3 bg-white rounded">
-              <p class="mb-1">"Transaksi aman, admin responsif. Recommended!"</p>
-              <small>- Budi, Jakarta</small>
-            </div>
-          </div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Fee jelas dan cepat cair."</p><small>- Siti, Surabaya</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Bisa dipercaya untuk jual beli akun game."</p><small>- Agus, Medan</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Proses simpel, UI friendly."</p><small>- Rina, Bandung</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Admin bantu cepat saat kendala."</p><small>- Dian, Bali</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Rekberinaja bikin transaksi tanpa was-was."</p><small>- Hendra, Pekanbaru</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Fee kompetitif, layanan oke."</p><small>- Laila, Makassar</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Mudah dipakai lewat HP."</p><small>- Wahyu, Semarang</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Tracking lokasi membuat aman."</p><small>- Intan, Malang</small></div></div>
-          <div class="carousel-item"><div class="p-3 bg-white rounded"><p class="mb-1">"Sangat membantu penjual & pembeli kecil."</p><small>- Fajar, Lampung</small></div></div>
-        </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselTestimoni" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselTestimoni" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
-      </div>
-
-      <div class="mt-3">
-        <a href="https://www.facebook.com/share/p/1FTPoh34Wf/" target="_blank">Lihat testimoni lain di Facebook</a>
-      </div>
-    </section>
-
-    <!-- Profil (hidden by default) -->
-    <section id="profileSection" class="mt-4 section">
-      <h5>Profil Rekberinaja</h5>
-      <div class="card p-3">
-        <div class="row g-3 align-items-center">
-          <div class="col-md-3 text-center">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilVLbn175XWOXs2T5L4FSyOuaxkbdOGdliRbbK5aPAcbe1bIWEAko3tvG7LEC1zkmuP5esoB5Q8Ez9JPd6mPerB8dWkAJCAKhqpBbWPHw6p3-VAsS728cFSLnaXiBRTM4qcgWuNKcokEoBeSMyR6TE-cgrOcP79mHduy-2erIRKdazh4b9sSh2YTCTboHv/s981/IMG_20250911_201506.jpg" alt="Pendiri" class="img-fluid rounded" style="max-width:160px;">
-          </div>
-          <div class="col-md-9">
-            <h6>FERI PRADANA</h6>
-            <p class="mb-1"><strong>Domisili:</strong> Riau - Kabupaten Rokan Hulu, Kecamatan Ujungbatu, Jl. Lubuk Bendahara, Sukamaju</p>
-            <h6>Visi</h6>
-            <p>Mewujudkan transaksi jual-beli online yang aman, transparan, dan cepat untuk semua kalangan.</p>
-            <h6>Misi</h6>
-            <ul>
-              <li>Menyediakan layanan escrow (rekber) yang terpercaya dan mudah digunakan.</li>
-              <li>Mengutamakan keamanan data dan komunikasi pembeli-penjual.</li>
-              <li>Memberikan dukungan cepat dan solusi bila terjadi sengketa.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Modal: Form Transaksi -->
-    <div class="modal fade" id="trxModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Form Transaksi REKBERINAJA</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <form id="trxForm" onsubmit="return false;">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label class="form-label">Nama Pembeli<span style="color:#d00">*</span></label>
-                  <input type="text" class="form-control" id="buyerName" required>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Nomor WhatsApp Pembeli (tanpa +62)<span style="color:#d00">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text">+62</span>
-                    <input type="tel" class="form-control" id="buyerPhone" placeholder="contoh: 81234567890" required>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <label class="form-label">Nama Penjual<span style="color:#d00">*</span></label>
-                  <input type="text" class="form-control" id="sellerName" required>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Nomor WhatsApp Penjual (tanpa +62)<span style="color:#d00">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text">+62</span>
-                    <input type="tel" class="form-control" id="sellerPhone" placeholder="contoh: 81234567890" required>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <label class="form-label">Nominal Transaksi (Rp)<span style="color:#d00">*</span></label>
-                  <input type="number" min="1" class="form-control" id="amount" required>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Fee Transaksi (Rp)</label>
-                  <input type="text" class="form-control" id="feeDisplay" readonly value="-">
-                </div>
-
-                <div class="col-12">
-                  <label class="form-label">Deskripsi / Keterangan Transaksi</label>
-                  <textarea class="form-control" id="description" rows="2" placeholder="Contoh: akun game, item, dsb."></textarea>
-                </div>
-
-                <div class="col-md-6">
-                  <label class="form-label">Lokasi Penjual <small class="text-danger">(Wajib di-set oleh Penjual)</small></label>
-                  <div class="d-flex gap-2">
-                    <button type="button" id="getSellerLoc" class="btn btn-outline-secondary">Set Lokasi Penjual</button>
-                    <input type="text" id="sellerMapUrl" class="form-control" placeholder="Belum ada lokasi" readonly>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <label class="form-label">Preview Peta (Penjual)</label>
-                  <div id="sellerMapPreview" class="d-flex align-items-center"></div>
-                </div>
-
-                <div class="col-12 text-end">
-                  <button type="button" class="btn btn-success" id="sendToAdmin">Kirim Pesanan ke Admin (WhatsApp)</button>
-                </div>
-
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div> <!-- /container -->
-
-  <!-- Bottom navigation -->
-  <div class="bottom-nav d-md-none">
-    <a href="#" onclick="showSection('homeSection'); return false;" class="active" id="navHome">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="" viewBox="0 0 16 16"><path d="M8 3.293l6 6V15a1 1 0 0 1-1 1h-3v-4H6v4H3a1 1 0 0 1-1-1V9.293l6-6z"/></svg>
-      Home
-    </a>
-    <a href="#" onclick="showSection('testimoniSection'); return false;" id="navTesti">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M3 3.5A1.5 1.5 0 1 1 4.5 5 1.5 1.5 0 0 1 3 3.5zM8 3.5A1.5 1.5 0 1 1 9.5 5 1.5 1.5 0 0 1 8 3.5zM13 3.5A1.5 1.5 0 1 1 14.5 5 1.5 1.5 0 0 1 13 3.5z"/></svg>
-      Testimoni
-    </a>
-    <a href="#" onclick="showSection('profileSection'); return false;" id="navProfile">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 .001-6.001A3 3 0 0 0 8 8zm4 8H4a1 1 0 0 1-1-1 5 5 0 0 1 10 0 1 1 0 0 1-1 1z"/></svg>
-      Profil
-    </a>
+<nav class="navbar navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">RAJ | Rekberinaja</a>
   </div>
+</nav>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="banner">💳 REKBERINAJA AMAN DAN CEPAT UNTUK SEMUA TRANSAKSI</div>
 
-  <script>
-    // Format number to Rupiah style
-    const toRupiah = (n) => new Intl.NumberFormat('id-ID').format(Number(n||0));
+<div class="container my-4" id="homePage">
+  <h4 class="text-center mb-3 text-primary">Panduan Transaksi Rekberinaja</h4>
+  <p class="text-center">Isi form transaksi dengan benar, pastikan lokasi penjual dan pembeli diatur sebelum mengirimkan ke admin.</p>
+  <div class="text-center mt-4">
+    <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#transaksiModal">Mulai Transaksi</button>
+  </div>
+</div>
 
-    // Fee calculation according to ranges (as requested)
-    function calculateFee(amount) {
-      const a = Number(amount);
-      if (!a || a <= 0) return 0;
-      if (a >= 10000 && a <= 50000) return 2000;
-      if (a > 50000 && a <= 100000) return 5000;
-      if (a > 100000 && a <= 500000) return 10000;
-      if (a > 500000 && a <= 1000000) return 15000;
-      if (a > 1000000 && a <= 9999000) return 20000;
-      if (a >= 10000000 && a <= 50000000) return 25000;
-      if (a >= 50001000 && a <= 99999000) return 50000;
-      return 0;
-    }
+<!-- Modal Transaksi -->
+<div class="modal fade" id="transaksiModal" tabindex="-1" aria-labelledby="transaksiModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Form Transaksi REKBERINAJA</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="rekberForm">
+          <div class="mb-2">
+            <label>Nama Pembeli</label>
+            <input type="text" class="form-control" id="namaPembeli" required>
+          </div>
+          <div class="mb-2">
+            <label>Nomor WhatsApp Pembeli</label>
+            <input type="tel" class="form-control" id="waPembeli" placeholder="+62..." required>
+          </div>
+          <div class="mb-2">
+            <label>Nama Penjual</label>
+            <input type="text" class="form-control" id="namaPenjual" required>
+          </div>
+          <div class="mb-2">
+            <label>Nomor WhatsApp Penjual</label>
+            <input type="tel" class="form-control" id="waPenjual" placeholder="+62..." required>
+          </div>
+          <div class="mb-2">
+            <label>Nominal Transaksi (Rp)</label>
+            <input type="number" class="form-control" id="nominal" required>
+          </div>
+          <div class="mb-2">
+            <label>Fee Transaksi (otomatis)</label>
+            <input type="text" class="form-control" id="fee" readonly>
+          </div>
 
-    // update fee when amount changes
-    document.getElementById('amount').addEventListener('input', function() {
-      const fee = calculateFee(this.value);
-      document.getElementById('feeDisplay').value = fee > 0 ? 'Rp ' + toRupiah(fee) : (this.value ? 'Hubungi admin' : '-');
+          <div class="mb-2">
+            <button type="button" class="btn btn-outline-primary w-100" onclick="getLocation()">📍 Set Lokasi Penjual</button>
+            <small id="lokasiPenjual" class="text-muted d-block mt-1">Belum diatur</small>
+            <iframe id="mapFrame" src="" width="100%" height="200" style="display:none;" loading="lazy"></iframe>
+          </div>
+
+          <div class="mb-2">
+            <label>Deskripsi / Keterangan Transaksi</label>
+            <textarea class="form-control" id="deskripsi" rows="3" placeholder="Contoh: Akun Game Mobile Legends..."></textarea>
+          </div>
+
+          <div class="text-center mt-3">
+            <button type="button" class="btn btn-success w-100" onclick="kirimPesanan()">Kirim Pesanan ke Admin</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Testimoni -->
+<div class="container my-4" id="testimoniPage" style="display:none;">
+  <h4 class="text-center text-primary">Testimoni Pengguna</h4>
+  <div id="testiCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active text-center"><p>“Transaksi cepat dan aman banget!” - <b>Andi</b></p></div>
+      <div class="carousel-item text-center"><p>“Rekberinaja terpercaya, recomended!” - <b>Sinta</b></p></div>
+      <div class="carousel-item text-center"><p>“Fee murah, pelayanan cepat.” - <b>Rudi</b></p></div>
+      <div class="carousel-item text-center"><p>“Sudah 3x transaksi aman!” - <b>Fajar</b></p></div>
+      <div class="carousel-item text-center"><p>“Admin fast respon banget!” - <b>Lina</b></p></div>
+      <div class="carousel-item text-center"><p>“Mantap untuk jual beli online!” - <b>Hendra</b></p></div>
+      <div class="carousel-item text-center"><p>“Sangat puas dengan layanan ini.” - <b>Rina</b></p></div>
+      <div class="carousel-item text-center"><p>“Aman dan transparan!” - <b>Bagas</b></p></div>
+      <div class="carousel-item text-center"><p>“Terpercaya 100%!” - <b>Desi</b></p></div>
+      <div class="carousel-item text-center"><p>“Terbaik buat transaksi online.” - <b>Doni</b></p></div>
+    </div>
+  </div>
+  <div class="text-center mt-3">
+    <a href="https://www.facebook.com/share/p/1FTPoh34Wf/" target="_blank" class="btn btn-primary">Lihat Testimoni Lain</a>
+  </div>
+</div>
+
+<!-- Profil -->
+<div class="container my-4" id="profilPage" style="display:none;">
+  <h4 class="text-center text-primary">Profil & Visi Misi REKBERINAJA</h4>
+  <div class="text-center">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilVLbn175XWOXs2T5L4FSyOuaxkbdOGdliRbbK5aPAcbe1bIWEAko3tvG7LEC1zkmuP5esoB5Q8Ez9JPd6mPerB8dWkAJCAKhqpBbWPHw6p3-VAsS728cFSLnaXiBRTM4qcgWuNKcokEoBeSMyR6TE-cgrOcP79mHduy-2erIRKdazh4b9sSh2YTCTboHv/s981/IMG_20250911_201506.jpg" width="150" class="rounded-circle shadow mt-3">
+    <p class="mt-3"><b>Nama:</b> FERI PRADANA<br><b>Domisili:</b> RIAU - KABUPATEN ROKANHULU<br>KECAMATAN UJUNGBATU, JL. LUBUK BENDAHARA, SUKAMAJU</p>
+  </div>
+  <h6 class="mt-4">Visi:</h6>
+  <p>Menjadi platform rekber terpercaya untuk seluruh transaksi online di Indonesia.</p>
+  <h6>Misi:</h6>
+  <ul>
+    <li>Meningkatkan keamanan dan kepercayaan dalam transaksi online.</li>
+    <li>Memberikan pelayanan cepat dan transparan.</li>
+    <li>Mendukung ekosistem jual beli digital yang aman.</li>
+  </ul>
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <button onclick="showPage('home')">🏠 Home</button>
+  <button onclick="showPage('testimoni')">⭐ Testimoni</button>
+  <button onclick="showPage('profil')">👤 Profil</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function showPage(page) {
+  document.getElementById('homePage').style.display = (page === 'home') ? 'block' : 'none';
+  document.getElementById('testimoniPage').style.display = (page === 'testimoni') ? 'block' : 'none';
+  document.getElementById('profilPage').style.display = (page === 'profil') ? 'block' : 'none';
+}
+
+document.getElementById('nominal').addEventListener('input', function() {
+  const n = parseInt(this.value);
+  let fee = 0;
+  if (n >= 10000 && n <= 50000) fee = 2000;
+  else if (n <= 100000) fee = 5000;
+  else if (n <= 500000) fee = 10000;
+  else if (n <= 1000000) fee = 15000;
+  else if (n <= 9999000) fee = 20000;
+  else if (n <= 50000000) fee = 25000;
+  else if (n <= 99999000) fee = 50000;
+  document.getElementById('fee').value = fee ? 'Rp ' + fee.toLocaleString() : '';
+});
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      const url = `https://www.google.com/maps?q=${lat},${lon}`;
+      document.getElementById('lokasiPenjual').innerText = url;
+      const mapFrame = document.getElementById('mapFrame');
+      mapFrame.src = `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+      mapFrame.style.display = 'block';
+    }, function() {
+      alert("Izin lokasi ditolak. Silakan aktifkan GPS.");
     });
+  } else {
+    alert("Browser tidak mendukung lokasi GPS.");
+  }
+}
 
-    // Ensure phone inputs accept digits only
-    ['buyerPhone','sellerPhone'].forEach(id => {
-      document.getElementById(id).addEventListener('input', e => {
-        e.target.value = e.target.value.replace(/[^0-9]/g,'');
-      });
-    });
+function kirimPesanan() {
+  const admin = "6281262433533";
+  const namaPembeli = document.getElementById('namaPembeli').value;
+  const waPembeli = document.getElementById('waPembeli').value;
+  const namaPenjual = document.getElementById('namaPenjual').value;
+  const waPenjual = document.getElementById('waPenjual').value;
+  const nominal = document.getElementById('nominal').value;
+  const fee = document.getElementById('fee').value;
+  const deskripsi = document.getElementById('deskripsi').value;
+  const lokasi = document.getElementById('lokasiPenjual').innerText;
 
-    // Capture seller geolocation (seller's location is REQUIRED)
-    async function setSellerLocation() {
-      const btn = document.getElementById('getSellerLoc');
-      btn.disabled = true;
-      btn.innerText = 'Mencari lokasi...';
-      try {
-        const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { enableHighAccuracy: true, timeout: 20000 }));
-        const lat = pos.coords.latitude.toFixed(6);
-        const lng = pos.coords.longitude.toFixed(6);
-        const mapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
-        document.getElementById('sellerMapUrl').value = mapUrl;
-        // show small iframe preview
-        document.getElementById('sellerMapPreview').innerHTML = `<iframe width="100%" height="140" src="https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed" style="border:0;border-radius:8px"></iframe>`;
-      } catch (err) {
-        alert('Gagal mengambil lokasi. Pastikan izin lokasi diaktifkan dan coba lagi.');
-      } finally {
-        btn.disabled = false;
-        btn.innerText = 'Set Lokasi Penjual';
-      }
-    }
-    document.getElementById('getSellerLoc').addEventListener('click', setSellerLocation);
+  if (!namaPembeli || !waPembeli || !namaPenjual || !waPenjual || !nominal) {
+    alert("Harap isi semua kolom wajib!");
+    return;
+  }
 
-    // Build WhatsApp message and open chat to admin
-    document.getElementById('sendToAdmin').addEventListener('click', function() {
-      const buyerName = document.getElementById('buyerName').value.trim();
-      const buyerPhone = document.getElementById('buyerPhone').value.trim();
-      const sellerName = document.getElementById('sellerName').value.trim();
-      const sellerPhone = document.getElementById('sellerPhone').value.trim();
-      const amount = document.getElementById('amount').value.trim();
-      const feeTxt = document.getElementById('feeDisplay').value || '-';
-      const desc = document.getElementById('description').value.trim();
-      const sellerMap = document.getElementById('sellerMapUrl').value || '-';
+  const message = `Halo Admin Rekberinaja 👋%0A%0A*Data Transaksi Baru:*%0A` +
+    `Nama Pembeli: ${namaPembeli}%0AWhatsApp Pembeli: ${waPembeli}%0A` +
+    `Nama Penjual: ${namaPenjual}%0AWhatsApp Penjual: ${waPenjual}%0A` +
+    `Nominal Transaksi: Rp ${parseInt(nominal).toLocaleString()}%0A` +
+    `Fee Rekber: ${fee}%0A` +
+    `Deskripsi: ${deskripsi}%0A` +
+    `Lokasi Penjual: ${lokasi}%0A%0A` +
+    `Silakan lanjut proses verifikasi transaksi.`;
 
-      // Validation: required fields & seller map required
-      if (!buyerName || !buyerPhone || !sellerName || !sellerPhone || !amount) {
-        alert('Harap lengkapi semua field wajib (Nama & Nomor both, Nominal).');
-        return;
-      }
-      if (sellerMap === '-') {
-        alert('Lokasi penjual wajib di-set sebelum mengirim pesanan.');
-        return;
-      }
+  const waURL = `https://wa.me/${admin}?text=${message}`;
+  window.open(waURL, "_blank");
+}
+</script>
 
-      // sanitize phones: remove non-digit, prefix with 62
-      const clean = p => p.replace(/[^0-9]/g, '').replace(/^0+/, '');
-      const buyerFull = '62' + clean(buyerPhone);
-      const sellerFull = '62' + clean(sellerPhone);
-
-      const admin = '6281262433533';
-      const message =
-`PESAN REKBERINAJA
-Nama Pembeli: ${buyerName}
-WA Pembeli: +${buyerFull}
-Nama Penjual: ${sellerName}
-WA Penjual: +${sellerFull}
-Nominal: Rp ${toRupiah(amount)}
-Fee: ${feeTxt}
-Deskripsi: ${desc || '-'}
-Lokasi Penjual: ${sellerMap}`;
-
-      const url = `https://wa.me/${admin}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    });
-
-    // bottom nav show/hide sections (Testimoni & Profil must be hidden on home)
-    function showSection(id) {
-      const secs = document.querySelectorAll('.section');
-      secs.forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-
-      // update bottom nav active state
-      document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
-      if (id === 'homeSection') document.getElementById('navHome').classList.add('active');
-      if (id === 'testimoniSection') document.getElementById('navTesti').classList.add('active');
-      if (id === 'profileSection') document.getElementById('navProfile').classList.add('active');
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // if opening modal was requested from home, nothing changes here
-    }
-
-    // open modal when clicking Mulai Transaksi
-    document.getElementById('startTrxBtn').addEventListener('click', () => {
-      const modal = new bootstrap.Modal(document.getElementById('trxModal'));
-      modal.show();
-    });
-
-    // Ensure Testimoni & Profile are not shown on home load (require selection)
-    // (initial state already set via CSS .section.active on home)
-  </script>
 </body>
 </html>
