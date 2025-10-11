@@ -1,443 +1,328 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>FERI STORE - Top Up Game</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FERI STORE - Top Up & Rekber</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
     :root{
-      --bg:#070707;
-      --card:#111;
-      --accent:#ff3b3b;
-      --muted:#9a9a9a;
-      --lightblue:#dff4ff;
+      --bg1:#040404; --bg2:#0b0b0b;
+      --accent:#ff3b3b; --muted:#bfbfbf;
     }
+    html,body{height:100%;margin:0}
     body{
-      background:var(--bg);
-      color:#fff;
-      font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      padding-bottom:80px;
+      background: linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
+      color:#fff; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    .banner{
-      text-align:center;
-      padding:28px 16px;
-      background: linear-gradient(180deg, rgba(255,59,59,0.06), transparent);
-    }
-    .brand{
-      font-size:34px;
-      font-weight:700;
-      color:var(--accent);
-      letter-spacing:1px;
-    }
+    .wrap{max-width:420px;margin:0 auto;padding:20px 18px;text-align:center}
+    .brand{font-size:44px;font-weight:800;color:var(--accent);letter-spacing:2px;margin-top:6px}
     .rekber-btn{
-      border:3px solid var(--accent);
+      display:inline-block;margin:20px auto 8px;padding:14px 46px;border-radius:34px;
+      border:5px solid var(--accent); color:var(--accent); font-weight:800; text-decoration:none;
+      background:transparent; font-size:18px;
+    }
+    .section-title{margin-top:28px;color:var(--accent);font-weight:800;letter-spacing:1px}
+    .grid{margin-top:18px}
+    .cards{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+    .card-game{
+      width: calc(50% - 20px);
+      min-height:92px;
+      border-radius:22px;
+      padding:18px;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border:3px solid rgba(255,59,59,0.12);
       color:var(--accent);
-      border-radius:18px;
-      padding:14px 20px;
-      display:inline-block;
-      margin-top:18px;
-      font-weight:700;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease;
     }
-    .section-title{
-      text-align:center;
-      color:var(--accent);
-      margin:22px 0 12px;
-      font-weight:600;
-      letter-spacing:1px;
+    .card-game small{display:block;color:var(--muted);font-weight:700;margin-top:8px}
+    .card-game:active{transform:scale(.995)}
+    footer{margin-top:28px;padding:18px 0;color:var(--muted);font-weight:700}
+    /* modal */
+    .modal-content{background:#0c0c0c;color:#fff;border-radius:12px}
+    .modal-header .btn-close{filter:invert(1)}
+    label{font-weight:700;color:#fff}
+    .pay-preview{background:#0d0d0d;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+    .qris-img{max-width:220px;display:block;margin:10px auto}
+    /* small screens adjustments */
+    @media (max-width:420px){
+      .brand{font-size:40px}
+      .rekber-btn{padding:12px 28px}
+      .card-game{width: calc(50% - 16px);min-height:82px}
     }
-    .game-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:2px solid rgba(255,59,59,0.25);
-      border-radius:18px;
-      padding:20px;
-      text-align:center;
-      color:var(--accent);
-      font-weight:700;
-      min-height:84px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .footer{
-      text-align:center;
-      color:var(--muted);
-      padding:18px 12px;
-      border-top:1px solid rgba(255,255,255,0.03);
-      position:fixed;
-      left:0;right:0;bottom:0;background:var(--bg);
-    }
-    /* modal scroll area */
-    .modal-body{
-      max-height:60vh;
-      overflow:auto;
-    }
-    .form-label{color:#ddd;}
-    .price-box{
-      background: #090909;
-      border-radius:10px;
-      padding:10px;
-      border:1px solid rgba(255,59,59,0.12);
-      margin-bottom:8px;
-    }
-    .small-muted{color:var(--muted); font-size:0.9rem;}
-    .qris-img{max-width:220px; display:block; margin:auto;}
-    /* responsive padding */
-    .container-sm{padding-left:12px; padding-right:12px;}
   </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="brand">FERI STORE</div>
+    <a href="#" id="openRekber" class="rekber-btn">JASA REKBER</a>
 
-  <div class="banner">
-    <div style="display:flex; align-items:center; justify-content:space-between; max-width:800px;margin:auto;">
-      <div style="color:#88d1e6; font-weight:600;">Oke Bos!</div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <i class="fa-regular fa-comment" style="color:#fff"></i>
-        <i class="fa-regular fa-user" style="color:#fff"></i>
-      </div>
-    </div>
+    <h4 class="section-title">TOP UP DIAMOND GAME</h4>
 
-    <div class="brand mt-3">FERI STORE</div>
-    <div class="rekber-btn" id="openRekberBtn" role="button">JASA REKBER</div>
-  </div>
-
-  <div class="container-sm mt-3" style="max-width:900px;margin:auto">
-    <div class="section-title">TOP UP DIAMOND GAME</div>
-
-    <div class="row g-3">
-      <div class="col-6">
-        <div class="game-card" role="button" data-game="ml" id="btnML">
-          <div>
-            <div style="font-size:18px;">Mobile Legend</div>
-            <div style="font-size:12px" class="small-muted">Top-up MLBB</div>
+    <div class="grid">
+      <div class="cards">
+        <div class="card-game" data-game="mlbb" onclick="openProduct('mlbb')">
+          <div style="text-align:center;">
+            Mobile<br>Legend
+            <small>Top-up MLBB</small>
           </div>
         </div>
-      </div>
 
-      <div class="col-6">
-        <div class="game-card" role="button" data-game="ff" id="btnFF">
-          <div>
-            <div style="font-size:18px;">FREE FIRE</div>
-            <div style="font-size:12px" class="small-muted">Top-up FF</div>
+        <div class="card-game" data-game="ff" onclick="openProduct('ff')">
+          <div style="text-align:center;">
+            FREE FIRE
+            <small>Top-up FF</small>
           </div>
         </div>
-      </div>
 
-      <div class="col-6">
-        <div class="game-card" role="button" data-game="pubg" id="btnPUBG">
-          <div>PUBG</div>
+        <div class="card-game" data-game="pubg" onclick="openProduct('pubg')">
+          <div style="text-align:center;">
+            PUBG
+            <small>Top-up UC</small>
+          </div>
         </div>
-      </div>
 
-      <div class="col-6">
-        <div class="game-card" role="button" data-game="roblox" id="btnROBLOX">
-          <div>ROBLOX</div>
+        <div class="card-game" data-game="roblox" onclick="openProduct('roblox')">
+          <div style="text-align:center;">
+            ROBLOX
+          </div>
         </div>
-      </div>
 
-      <div class="col-6">
-        <div class="game-card" role="button" data-game="ragnarok" id="btnRAG">
-          <div>RAGNAROK</div>
+        <div class="card-game" data-game="ragnarok" onclick="openProduct('ragnarok')">
+          <div style="text-align:center;">
+            RAGNAROK
+          </div>
         </div>
-      </div>
 
-      <div class="col-6">
-        <div class="game-card" role="button" id="btnOthers">
-          <div>Game Lainnya</div>
+        <div class="card-game" data-game="others" onclick="openProduct('others')">
+          <div style="text-align:center;">
+            Game Lainnya
+          </div>
         </div>
       </div>
     </div>
 
-  </div>
-
-  <div style="height:60px"></div>
-
-  <div class="footer">
-    <div style="font-weight:600">© 2025 FERI STORE - All Rights Reserved.</div>
+    <footer>© 2025 FERI STORE - All Rights Reserved.</footer>
   </div>
 
   <!-- REKBER Modal -->
   <div class="modal fade" id="rekberModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-dark text-white">
+    <div class="modal-dialog">
+      <div class="modal-content">
         <div class="modal-header border-0">
-          <h5 class="modal-title">TRANSAKSI REKBER</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Transaksi Rekber</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <p class="small-muted">Pilih metode Rekber:</p>
-          <div class="d-grid gap-2">
-            <a class="btn btn-outline-danger" id="rekberFbBtn" href="https://www.facebook.com/bangjuan168?mibextid=ZbWKwL" target="_blank"><i class="fa-brands fa-facebook"></i> REKBER VIA FB</a>
-            <button class="btn btn-danger" id="rekberWaBtn"><i class="fa-brands fa-whatsapp"></i> REKBER VIA WHATSAPP ADMIN</button>
+        <div class="modal-body" style="max-height:64vh;overflow:auto;">
+          <p>Pilih opsi Rekber:</p>
+          <div class="d-grid gap-2 mb-3">
+            <a id="rekberFb" class="btn btn-outline-light" target="_blank"
+               href="https://www.facebook.com/bangjuan168?mibextid=ZbWKwL">REKBER VIA FB</a>
+            <button id="rekberWaBtn" class="btn btn-outline-light">REKBER VIA WHATSAPP ADMIN</button>
           </div>
 
-          <div id="rekberFormWrap" class="mt-3" style="display:none;">
-            <form id="rekberForm">
-              <div class="mb-2">
-                <label class="form-label">Nomor WA Seller</label>
-                <input class="form-control" type="tel" id="sellerWa" placeholder="contoh: 62812xxxxxxxx" required>
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Nomor WA Buyer</label>
-                <input class="form-control" type="tel" id="buyerWa" placeholder="contoh: 62812xxxxxxxx" required>
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Nilai Transaksi (Rp)</label>
-                <input class="form-control" type="number" id="rekberNilai" placeholder="10000" required>
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Produk</label>
-                <input class="form-control" type="text" id="rekberProduk" placeholder="Nama produk / keterangan" required>
-              </div>
-
-              <div class="d-flex gap-2 mt-2">
-                <button type="button" class="btn btn-outline-light flex-fill" id="rekberCopyBtn">Salin Pesan</button>
-                <button type="button" class="btn btn-success flex-fill" id="rekberSendBtn"><i class="fa-brands fa-whatsapp"></i> Kirim ke Admin</button>
-              </div>
-              <div class="small-muted mt-2">Pesan dikirim ke admin WA: <strong>+62 851-5707-7789</strong></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GAME ORDER Modal template - we'll fill content dynamically -->
-  <div class="modal fade" id="gameModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content bg-dark text-white">
-        <div class="modal-header border-0">
-          <h5 class="modal-title" id="gameModalTitle">Order</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="orderForm">
+          <form id="rekberForm" style="display:none">
             <div class="mb-2">
-              <label class="form-label">ID GAME (Server + ID)</label>
-              <input class="form-control" id="gameId" placeholder="Contoh: 1234567890" required>
+              <label for="waSeller">Nomor WA Seller</label>
+              <input id="waSeller" class="form-control" placeholder="628xxxx" />
             </div>
-
             <div class="mb-2">
-              <label class="form-label">Pilih Paket Diamond</label>
-              <select class="form-select" id="paketSelect" required></select>
+              <label for="waBuyer">Nomor WA Buyer</label>
+              <input id="waBuyer" class="form-control" placeholder="628xxxx" />
             </div>
-
-            <div class="price-box mb-2">
-              <div class="small-muted">Harga dasar:</div>
-              <div id="basePrice" style="font-weight:700; font-size:1.1rem;">-</div>
-              <div class="small-muted mt-1">Total (termasuk 3-digit unik verifikasi):</div>
-              <div id="totalPrice" style="font-weight:800; font-size:1.2rem; color:var(--accent)">-</div>
-              <div class="small-muted">Kode paket: <span id="kodePaket">-</span></div>
-            </div>
-
             <div class="mb-2">
-              <label class="form-label">Metode Pembayaran</label>
-              <select class="form-select" id="metodeBayar">
-                <option value="qris">QRIS</option>
-                <option value="dana">DANA</option>
-              </select>
+              <label for="rekberAmount">Nilai Transaksi (Rp)</label>
+              <input id="rekberAmount" type="number" class="form-control" placeholder="100000" />
             </div>
-
-            <div id="metodeInfo" class="mb-2">
-              <!-- dynamic -->
+            <div class="mb-3">
+              <label for="rekberProduct">Produk</label>
+              <input id="rekberProduct" class="form-control" placeholder="Contoh: MLDP28 - 28 Diamond" />
             </div>
-
-            <div class="d-flex gap-2">
-              <button type="button" class="btn btn-outline-light flex-fill" id="copyTotalBtn">Salin Total</button>
-              <button type="button" class="btn btn-danger flex-fill" id="sendOrderBtn"><i class="fa-brands fa-whatsapp"></i> Kirim ke Admin</button>
-            </div>
-
-            <div class="small-muted mt-2">Admin WA tujuan: <strong>+62 851-5707-7789</strong></div>
+            <button id="sendRekber" class="btn btn-danger w-100">Kirim Transaksi ke Admin (WA)</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Data paket
-    const packages = {
-      ml: [
-        {kode:"MLDP28",desc:"28 DIAMOND",harga:10000},
-        {kode:"MLDP36",desc:"36 DIAMOND",harga:12000},
-        {kode:"MLDP59",desc:"59 DIAMOND",harga:18000},
-        {kode:"MLDP74",desc:"74 DIAMOND",harga:22000},
-        {kode:"MLDP85",desc:"85 DIAMOND",harga:24000},
-        {kode:"MLDP172",desc:"172 DIAMOND",harga:49000},
-        {kode:"MLDP370",desc:"370 DIAMOND",harga:101000}
-      ],
-      ff: [
-        {kode:"FFP70",desc:"70 DIAMOND",harga:10000},
-        {kode:"FFP100",desc:"100 DIAMOND",harga:15000},
-        {kode:"FFP140",desc:"140 DIAMOND",harga:20000},
-        {kode:"FFP200",desc:"200 DIAMOND",harga:28000},
-        {kode:"FFP400",desc:"400 DIAMOND",harga:53000},
-        {kode:"FFP720",desc:"720 DIAMOND",harga:93000},
-        {kode:"FFP1000",desc:"1000 DIAMOND",harga:128000},
-        {kode:"FFP2000",desc:"2000 DIAMOND",harga:256000}
-      ]
-    };
+  <!-- Product Modal -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h5 id="productTitle" class="modal-title">Top-up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="max-height:72vh;overflow:auto;">
+          <form id="productForm">
+            <div class="mb-2">
+              <label for="gameId">ID GAME (server + id / username)</label>
+              <input id="gameId" class="form-control" placeholder="Contoh: 1234-5678 / username" required />
+            </div>
 
-    const adminWa = "6285157077789"; // admin number to send messages
+            <div class="mb-3">
+              <label for="paketSelect">Pilih Paket</label>
+              <select id="paketSelect" class="form-select" required>
+                <option value="">-- pilih paket --</option>
+              </select>
+            </div>
 
-    // helpers
-    function formatRupiah(n){
-      // ensure integer
-      n = Math.round(n);
-      return 'Rp ' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            <div class="mb-3 pay-preview">
+              <div class="d-flex justify-content-between"><div>Harga dasar</div><div id="basePrice">-</div></div>
+              <div class="d-flex justify-content-between"><div>3 digit verifikasi</div><div id="rand3">-</div></div>
+              <div class="d-flex justify-content-between"><div><strong>Total yang harus dibayar</strong></div><div id="totalPrice"><strong>-</strong></div></div>
+
+              <div class="mt-3 d-flex gap-2">
+                <button type="button" id="copyTotal" class="btn btn-sm btn-outline-light">Salin Total</button>
+                <button type="button" id="showDana" class="btn btn-sm btn-outline-light">Tampilkan DANA</button>
+                <button type="button" id="showQris" class="btn btn-sm btn-outline-light">Tampilkan QRIS</button>
+              </div>
+
+              <div id="payInfo" class="mt-3" style="display:none">
+                <div id="danaInfo" style="display:none" class="muted">DANA: <strong>085156375253</strong> (Vina Pandu winata)</div>
+                <div id="qrisImage" style="display:none"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhS8JSpX1dp4v54D7iCOK4zyRJtZOFh1vuG9JLrU6AroEZfBbqMymFv1HjLSpFzYO4G28RM67k4nvWeBgQl-NJWuHJzKytTvHJifHYCszxN999ZTinKoxYi0jFATqawnomHHFSnL9Cg03a0XcwWrbJh2ckt7muSbgA6YQTO_kySYyWqajF4JJdE5sHUFsMV/s320/QRIS.png" alt="QRIS" class="qris-img" /></div>
+              </div>
+            </div>
+
+            <div class="mt-3">
+              <button id="sendOrder" class="btn btn-danger w-100">Kirim Transaksi ke Admin (WA)</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // product data
+  const PRODUCTS = {
+    mlbb: [
+      {code:'MLDP28', name:'28 Diamond', price:10000},
+      {code:'MLDP36', name:'36 Diamond', price:12000},
+      {code:'MLDP59', name:'59 Diamond', price:18000},
+      {code:'MLDP74', name:'74 Diamond', price:22000},
+      {code:'MLDP85', name:'85 Diamond', price:24000},
+      {code:'MLDP172', name:'172 Diamond', price:49000},
+      {code:'MLDP370', name:'370 Diamond', price:101000}
+    ],
+    ff: [
+      {code:'FFP70', name:'70 Diamond', price:10000},
+      {code:'FFP100', name:'100 Diamond', price:15000},
+      {code:'FFP140', name:'140 Diamond', price:20000},
+      {code:'FFP200', name:'200 Diamond', price:28000},
+      {code:'FFP400', name:'400 Diamond', price:53000},
+      {code:'FFP720', name:'720 Diamond', price:93000},
+      {code:'FFP1000', name:'1000 Diamond', price:128000},
+      {code:'FFP2000', name:'2000 Diamond', price:256000}
+    ],
+    roblox: [
+      {code:'RBX1', name:'100 Robux', price:91000},
+      {code:'RBX2', name:'200 Robux', price:109000},
+      {code:'RBX4', name:'400 Robux', price:141000}
+    ],
+    pubg: [], ragnarok: [], others: []
+  };
+
+  const adminWA = '6285157077789';
+  function $(id){return document.getElementById(id)}
+  function formatRupiah(n){ return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+  function random3(){ return Math.floor(Math.random()*900)+100; } // 100..999
+
+  // Rekber modal
+  const rekberModal = new bootstrap.Modal($('rekberModal'));
+  $('openRekber').addEventListener('click', (e)=>{ e.preventDefault(); rekberModal.show(); });
+  $('rekberWaBtn').addEventListener('click', ()=>{ $('rekberForm').style.display='block'; });
+
+  $('sendRekber').addEventListener('click', (ev)=>{
+    ev.preventDefault();
+    const seller = $('waSeller').value.trim();
+    const buyer = $('waBuyer').value.trim();
+    const amount = $('rekberAmount').value.trim();
+    const prod = $('rekberProduct').value.trim();
+    if(!seller || !buyer || !amount){ alert('Lengkapi data Rekber'); return; }
+    const text = `Permintaan Rekber%0ASeller:%20${encodeURIComponent(seller)}%0ABuyer:%20${encodeURIComponent(buyer)}%0AProduk:%20${encodeURIComponent(prod)}%0AJumlah:%20Rp${encodeURIComponent(amount)}`;
+    window.open(`https://wa.me/${adminWA}?text=${text}`,'_blank');
+  });
+
+  // product modal
+  const productModal = new bootstrap.Modal($('productModal'));
+  function openProduct(game){
+    const title = $('productTitle');
+    title.textContent = (game==='mlbb')? 'Top-up Mobile Legend' : (game==='ff')? 'Top-up Free Fire' : (game==='roblox')? 'Top-up Roblox' : 'Top-up '+game.toUpperCase();
+    const sel = $('paketSelect');
+    sel.innerHTML = '<option value="">-- pilih paket --</option>';
+    const list = PRODUCTS[game] || [];
+    if(list.length===0){
+      sel.innerHTML += `<option value="">Tidak ada paket untuk ${game}</option>`;
+    } else {
+      list.forEach(p=>{
+        const v = JSON.stringify(p);
+        const txt = `${p.code} — ${p.name} — ${formatRupiah(p.price)}`;
+        sel.innerHTML += `<option value='${v}'>${txt}</option>`;
+      });
     }
+    // reset preview
+    $('basePrice').textContent = '-';
+    $('rand3').textContent = '-';
+    $('totalPrice').textContent = '-';
+    $('payInfo').style.display='none';
+    $('danaInfo').style.display='none';
+    $('qrisImage').style.display='none';
+    // store game
+    $('productModal').dataset.game = game;
+    productModal.show();
+  }
 
-    function random3digit(){
-      return Math.floor(Math.random()*900)+100; // 100..999
-    }
+  // compute and display total
+  $('paketSelect').addEventListener('change', computeTotal);
+  function computeTotal(){
+    const val = $('paketSelect').value;
+    if(!val) return;
+    const p = JSON.parse(val);
+    const base = Number(p.price);
+    const r = random3();
+    const total = Math.floor(base/1000)*1000 + r; // 3-digit alg
+    $('basePrice').textContent = formatRupiah(base);
+    $('rand3').textContent = r;
+    $('totalPrice').innerHTML = '<strong>' + formatRupiah(total) + '</strong>';
+    $('productModal').dataset.total = total;
+    $('productModal').dataset.paket = p.code + ' | ' + p.name;
+  }
 
-    // Modal controls
-    const rekberModal = new bootstrap.Modal(document.getElementById('rekberModal'));
-    const gameModal = new bootstrap.Modal(document.getElementById('gameModal'));
+  // payment display
+  $('showDana').addEventListener('click', ()=>{ $('payInfo').style.display='block'; $('danaInfo').style.display='block'; $('qrisImage').style.display='none'; });
+  $('showQris').addEventListener('click', ()=>{ $('payInfo').style.display='block'; $('danaInfo').style.display='none'; $('qrisImage').style.display='block'; });
 
-    document.getElementById('openRekberBtn').addEventListener('click', ()=> rekberModal.show());
+  // copy total
+  $('copyTotal').addEventListener('click', ()=>{
+    const t = $('productModal').dataset.total;
+    if(!t){ alert('Belum ada total'); return; }
+    navigator.clipboard.writeText(String(t)).then(()=>{ alert('Total tersalin: ' + t); });
+  });
 
-    // Rekber modal actions
-    document.getElementById('rekberWaBtn').addEventListener('click', ()=>{
-      document.getElementById('rekberFormWrap').style.display = 'block';
-    });
+  // send order to WA admin
+  $('sendOrder').addEventListener('click', (e)=>{
+    e.preventDefault();
+    const game = $('productModal').dataset.game || '';
+    const id = $('gameId').value.trim();
+    const paketRaw = $('paketSelect').value;
+    if(!id || !paketRaw){ alert('Lengkapi form top-up (ID & paket)'); return; }
+    const paket = JSON.parse(paketRaw);
+    // recompute final fresh for message
+    const r = random3();
+    const final = Math.floor(paket.price/1000)*1000 + r;
+    const msg = `Order TopUp ${encodeURIComponent(game.toUpperCase())}%0AID:%20${encodeURIComponent(id)}%0APaket:%20${encodeURIComponent(paket.code)}%20(${encodeURIComponent(paket.name)})%0AHarga:%20Rp${final}`;
+    window.open(`https://wa.me/${adminWA}?text=${msg}`,'_blank');
+  });
 
-    document.getElementById('rekberCopyBtn').addEventListener('click', ()=>{
-      const seller = document.getElementById('sellerWa').value||"[kosong]";
-      const buyer = document.getElementById('buyerWa').value||"[kosong]";
-      const nilai = document.getElementById('rekberNilai').value||"[kosong]";
-      const produk = document.getElementById('rekberProduk').value||"[kosong]";
-      const pesan = `Permintaan REKBER\nSeller: ${seller}\nBuyer: ${buyer}\nNilai: Rp ${parseInt(nilai)||nilai}\nProduk: ${produk}\n\nMohon bantuan admin.`;
-      navigator.clipboard?.writeText(pesan).then(()=> alert('Pesan rekber disalin ke clipboard.'));
-    });
-
-    document.getElementById('rekberSendBtn').addEventListener('click', ()=>{
-      const seller = document.getElementById('sellerWa').value||"[kosong]";
-      const buyer = document.getElementById('buyerWa').value||"[kosong]";
-      const nilai = document.getElementById('rekberNilai').value||"[kosong]";
-      const produk = document.getElementById('rekberProduk').value||"[kosong]";
-      const pesan = `Permintaan REKBER%0ASeller: ${encodeURIComponent(seller)}%0ABuyer: ${encodeURIComponent(buyer)}%0ANilai: Rp ${encodeURIComponent(nilai)}%0AProduk: ${encodeURIComponent(produk)}%0A%0AMohon bantu proses.`;
-      const url = `https://wa.me/${adminWa}?text=${pesan}`;
-      window.open(url, '_blank');
-    });
-
-    // GAME buttons
-    document.getElementById('btnML').addEventListener('click', ()=> openGameModal('ml','Mobile Legend'));
-    document.getElementById('btnFF').addEventListener('click', ()=> openGameModal('ff','Free Fire'));
-    // extra placeholders (will open generic modal)
-    document.getElementById('btnPUBG').addEventListener('click', ()=> openGameModal('pubg','PUBG'));
-    document.getElementById('btnROBLOX').addEventListener('click', ()=> openGameModal('roblox','ROBLOX'));
-    document.getElementById('btnRAG').addEventListener('click', ()=> openGameModal('ragnarok','Ragnarok'));
-    document.getElementById('btnOthers').addEventListener('click', ()=> openGameModal('others','Game Lainnya'));
-
-    function openGameModal(gameKey, title){
-      const titleEl = document.getElementById('gameModalTitle');
-      titleEl.textContent = title;
-      const paketSelect = document.getElementById('paketSelect');
-      paketSelect.innerHTML = '';
-
-      if(packages[gameKey]){
-        packages[gameKey].forEach(p=>{
-          const opt = document.createElement('option');
-          opt.value = JSON.stringify(p);
-          opt.textContent = `${p.desc} — ${formatRupiah(p.harga)}`;
-          paketSelect.appendChild(opt);
-        });
-      } else {
-        // fallback: generic options
-        const opt = document.createElement('option');
-        opt.value = JSON.stringify({kode:'GEN01',desc:'Paket Standard',harga:20000});
-        opt.textContent = 'Paket Standard — ' + formatRupiah(20000);
-        paketSelect.appendChild(opt);
-      }
-
-      // trigger price update
-      updatePriceDisplay();
-
-      // metode bayar default
-      updateMetodeInfo();
-
-      gameModal.show();
-    }
-
-    // update price when paket changes
-    document.getElementById('paketSelect').addEventListener('change', updatePriceDisplay);
-
-    function updatePriceDisplay(){
-      const pkt = JSON.parse(document.getElementById('paketSelect').value);
-      document.getElementById('basePrice').textContent = formatRupiah(pkt.harga);
-      document.getElementById('kodePaket').textContent = pkt.kode || '-';
-      // generate unique 3-digit and compute total
-      const rnd = random3digit();
-      // As algorithm: total = harga (rounded to nearest thousand) with the last 3 digits replaced by rnd
-      // Implementation: take harga rounded down to nearest 1000, then add rnd
-      const baseRounded = Math.floor(pkt.harga / 1000) * 1000;
-      const total = baseRounded + rnd;
-      document.getElementById('totalPrice').textContent = formatRupiah(total) + ` (unik: ${rnd})`;
-      // store on button dataset for sending
-      document.getElementById('sendOrderBtn').dataset.total = total;
-      document.getElementById('sendOrderBtn').dataset.kode = pkt.kode;
-      document.getElementById('sendOrderBtn').dataset.desc = pkt.desc;
-      document.getElementById('sendOrderBtn').dataset.hargaDasar = pkt.harga;
-    }
-
-    // metode bayar change
-    document.getElementById('metodeBayar').addEventListener('change', updateMetodeInfo);
-
-    function updateMetodeInfo(){
-      const val = document.getElementById('metodeBayar').value;
-      const wrap = document.getElementById('metodeInfo');
-      if(val === 'qris'){
-        wrap.innerHTML = `
-          <div class="small-muted">Scan QRIS untuk pembayaran</div>
-          <img class="qris-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhS8JSpX1dp4v54D7iCOK4zyRJtZOFh1vuG9JLrU6AroEZfBbqMymFv1HjLSpFzYO4G28RM67k4nvWeBgQl-NJWuHJzKytTvHJifHYCszxN999ZTinKoxYi0jFATqawnomHHFSnL9Cg03a0XcwWrbJh2ckt7muSbgA6YQTO_kySYyWqajF4JJdE5sHUFsMV/s320/QRIS.png" alt="QRIS">
-        `;
-      } else {
-        wrap.innerHTML = `
-          <div class="small-muted">Transfer via DANA</div>
-          <div class="price-box">
-            <div><strong>DANA</strong></div>
-            <div>085156375253</div>
-            <div class="small-muted">a.n Vina Pandu Winata</div>
-          </div>
-        `;
-      }
-    }
-
-    // copy total
-    document.getElementById('copyTotalBtn').addEventListener('click', ()=>{
-      const total = document.getElementById('sendOrderBtn').dataset.total;
-      if(!total){ alert('Pilih paket terlebih dahulu.'); return; }
-      const text = `Total: ${formatRupiah(parseInt(total))}`;
-      navigator.clipboard?.writeText(text).then(()=> alert('Total harga disalin ke clipboard.'));
-    });
-
-    // send order to admin via WA with prefilled message
-    document.getElementById('sendOrderBtn').addEventListener('click', ()=>{
-      const idgame = document.getElementById('gameId').value || "[kosong]";
-      const total = document.getElementById('sendOrderBtn').dataset.total || "[kosong]";
-      const kode = document.getElementById('sendOrderBtn').dataset.kode || "-";
-      const desc = document.getElementById('sendOrderBtn').dataset.desc || "-";
-      const metode = document.getElementById('metodeBayar').value;
-      const metodeLabel = metode === 'qris' ? 'QRIS' : 'DANA 085156375253 (Vina Pandu Winata)';
-      const pesanPlain = `ORDER TOPUP\nGame: ${document.getElementById('gameModalTitle').textContent}\nID: ${idgame}\nPaket: ${desc}\nKode: ${kode}\nTotal: Rp ${total}\nMetode: ${metodeLabel}\n\nMohon diproses.`;
-      // encode
-      const pesan = encodeURIComponent(pesanPlain);
-      const url = `https://wa.me/${adminWa}?text=${pesan}`;
-      window.open(url,'_blank');
-    });
-
-    // Small UX: if modal reopened, generate new unique code on paket change - handled by change event
-    // Also allow closing by clicking outside (Bootstrap default)
-
-    // Accessibility: allow Enter to submit? We're using button triggers to open WA, so forms are not submitted to server.
-
-    // Ensure forms scroll and are mobile-friendly (handled by CSS)
-
-    // End of script
-  </script>
+  // small UX: when modal shown, focus first input
+  document.getElementById('productModal').addEventListener('shown.bs.modal', ()=>{ const el = $('gameId'); if(el) el.focus(); });
+  document.getElementById('rekberModal').addEventListener('shown.bs.modal', ()=>{ const el = $('waSeller'); if(el) el.focus(); });
+</script>
 </body>
 </html>
