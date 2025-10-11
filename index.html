@@ -7,322 +7,457 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     :root{
-      --bg1:#040404; --bg2:#0b0b0b;
-      --accent:#ff3b3b; --muted:#bfbfbf;
+      --bg: #070606;
+      --panel: #0c0b0b;
+      --accent: #ff4d4d;
+      --muted: #a6a6a6;
     }
-    html,body{height:100%;margin:0}
-    body{
-      background: linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
-      color:#fff; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-    .wrap{max-width:420px;margin:0 auto;padding:20px 18px;text-align:center}
-    .brand{font-size:44px;font-weight:800;color:var(--accent);letter-spacing:2px;margin-top:6px}
-    .rekber-btn{
-      display:inline-block;margin:20px auto 8px;padding:14px 46px;border-radius:34px;
-      border:5px solid var(--accent); color:var(--accent); font-weight:800; text-decoration:none;
-      background:transparent; font-size:18px;
-    }
-    .section-title{margin-top:28px;color:var(--accent);font-weight:800;letter-spacing:1px}
-    .grid{margin-top:18px}
-    .cards{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-    .card-game{
-      width: calc(50% - 20px);
-      min-height:92px;
-      border-radius:22px;
-      padding:18px;
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      border:3px solid rgba(255,59,59,0.12);
+    html,body{height:100%; background: linear-gradient(#040404,#0a0a0a); color:#fff; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+    .wrap{max-width:480px; margin:0 auto; padding:20px 18px 36px;}
+    .brand{display:flex; align-items:center; justify-content:center; margin-top:6px;}
+    .brand .pill{
+      border:3px solid rgba(255,77,77,0.95);
+      border-radius:28px;
+      padding:12px 30px;
       color:var(--accent);
       font-weight:800;
-      cursor:pointer;
-      transition: transform .12s ease, background .12s ease;
+      font-size:18px;
+      letter-spacing:1px;
+      background:transparent;
     }
-    .card-game small{display:block;color:var(--muted);font-weight:700;margin-top:8px}
-    .card-game:active{transform:scale(.995)}
-    footer{margin-top:28px;padding:18px 0;color:var(--muted);font-weight:700}
-    /* modal */
-    .modal-content{background:#0c0c0c;color:#fff;border-radius:12px}
-    .modal-header .btn-close{filter:invert(1)}
-    label{font-weight:700;color:#fff}
-    .pay-preview{background:#0d0d0d;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
-    .qris-img{max-width:220px;display:block;margin:10px auto}
-    /* small screens adjustments */
-    @media (max-width:420px){
-      .brand{font-size:40px}
-      .rekber-btn{padding:12px 28px}
-      .card-game{width: calc(50% - 16px);min-height:82px}
+    .subtitle{ text-align:center; color:var(--muted); margin-top:8px; font-size:13px; }
+
+    .section-title{ text-align:center; color:var(--accent); font-weight:800; margin:22px 0 14px; letter-spacing:1px; font-size:20px; }
+
+    /* menu boxes */
+    .grid{display:grid; grid-template-columns: 1fr 1fr; gap:14px;}
+    .box {
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      min-height:92px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:16px;
+      border-radius:18px;
+      border:3px solid rgba(255,77,77,0.08);
+      color:var(--accent);
+      font-weight:800;
+      font-size:18px;
+      box-shadow: inset 0 2px 0 rgba(255,255,255,0.01);
+    }
+    .box .sub { display:block; color:var(--muted); font-weight:600; font-size:13px; margin-top:6px; }
+
+    /* bigger rounded outer like screenshot top button - handled by brand pill */
+
+    footer{ text-align:center; color:var(--muted); margin-top:18px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.03); font-size:14px; }
+
+    /* modal custom */
+    .modal-content{ background: #070707; color:#fff; border-radius:12px; border: 1px solid rgba(255,255,255,0.03); }
+    .modal .form-label{ color:#ddd; font-weight:600; }
+    .price-badge{ font-weight:800; color:#fff; background: rgba(255,77,77,0.12); padding:6px 10px; border-radius:10px; display:inline-block; }
+    .pay-info{ background: rgba(255,255,255,0.02); padding:10px; border-radius:8px; border:1px dashed rgba(255,77,77,0.06); }
+    .copy-btn{ font-size:13px; }
+
+    /* responsive tweaks */
+    @media(max-width:420px){
+      .box{ min-height:84px; font-size:16px; padding:12px; border-radius:14px; }
+      .brand .pill{ padding:10px 20px; font-size:16px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="brand">FERI STORE</div>
-    <a href="#" id="openRekber" class="rekber-btn">JASA REKBER</a>
+    <div class="brand">
+      <div class="pill">JASA REKBER</div>
+    </div>
 
-    <h4 class="section-title">TOP UP DIAMOND GAME</h4>
+    <div class="subtitle">JB JUAN STORE — Top Up Game & Layanan Rekber</div>
 
-    <div class="grid">
-      <div class="cards">
-        <div class="card-game" data-game="mlbb" onclick="openProduct('mlbb')">
-          <div style="text-align:center;">
-            Mobile<br>Legend
-            <small>Top-up MLBB</small>
-          </div>
+    <div class="section-title">TOP UP DIAMOND GAME</div>
+
+    <div class="grid mb-2">
+      <div class="box" role="button" id="btn-ml">
+        <div>
+          <div style="font-size:18px;">Mobile<br/>Legend</div>
+          <div class="sub">Top-up MLBB</div>
         </div>
+      </div>
 
-        <div class="card-game" data-game="ff" onclick="openProduct('ff')">
-          <div style="text-align:center;">
-            FREE FIRE
-            <small>Top-up FF</small>
-          </div>
+      <div class="box" role="button" id="btn-ff">
+        <div>
+          <div style="font-size:18px;">FREE FIRE</div>
+          <div class="sub">Top-up FF</div>
         </div>
+      </div>
 
-        <div class="card-game" data-game="pubg" onclick="openProduct('pubg')">
-          <div style="text-align:center;">
-            PUBG
-            <small>Top-up UC</small>
-          </div>
-        </div>
+      <div class="box" role="button" id="btn-pubg">
+        <div>PUBG</div>
+      </div>
 
-        <div class="card-game" data-game="roblox" onclick="openProduct('roblox')">
-          <div style="text-align:center;">
-            ROBLOX
-          </div>
-        </div>
+      <div class="box" role="button" id="btn-roblox">
+        <div>ROBLOX</div>
+      </div>
 
-        <div class="card-game" data-game="ragnarok" onclick="openProduct('ragnarok')">
-          <div style="text-align:center;">
-            RAGNAROK
-          </div>
-        </div>
+      <div class="box" role="button" id="btn-ragnarok">
+        <div>RAGNAROK</div>
+      </div>
 
-        <div class="card-game" data-game="others" onclick="openProduct('others')">
-          <div style="text-align:center;">
-            Game Lainnya
-          </div>
-        </div>
+      <div class="box" role="button" id="btn-lainnya">
+        <div>Game Lainnya</div>
       </div>
     </div>
 
     <footer>© 2025 FERI STORE - All Rights Reserved.</footer>
   </div>
 
-  <!-- REKBER Modal -->
-  <div class="modal fade" id="rekberModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+  <!-- Modal: Rekber Choice -->
+  <div class="modal fade" id="modalRekberChoice" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0">
-          <h5 class="modal-title">Transaksi Rekber</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Pilih Rekber</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" style="max-height:64vh;overflow:auto;">
-          <p>Pilih opsi Rekber:</p>
-          <div class="d-grid gap-2 mb-3">
-            <a id="rekberFb" class="btn btn-outline-light" target="_blank"
-               href="https://www.facebook.com/bangjuan168?mibextid=ZbWKwL">REKBER VIA FB</a>
-            <button id="rekberWaBtn" class="btn btn-outline-light">REKBER VIA WHATSAPP ADMIN</button>
+        <div class="modal-body text-center">
+          <p class="small" style="color:var(--muted)">Pilih metode Rekber</p>
+          <div class="d-grid gap-2">
+            <a class="btn btn-outline-secondary" target="_blank" href="https://www.facebook.com/bangjuan168?mibextid=ZbWKwL">REKBER VIA FB</a>
+            <button class="btn btn-danger" id="openRekberForm">REKBER VIA WA ADMIN</button>
           </div>
-
-          <form id="rekberForm" style="display:none">
-            <div class="mb-2">
-              <label for="waSeller">Nomor WA Seller</label>
-              <input id="waSeller" class="form-control" placeholder="628xxxx" />
-            </div>
-            <div class="mb-2">
-              <label for="waBuyer">Nomor WA Buyer</label>
-              <input id="waBuyer" class="form-control" placeholder="628xxxx" />
-            </div>
-            <div class="mb-2">
-              <label for="rekberAmount">Nilai Transaksi (Rp)</label>
-              <input id="rekberAmount" type="number" class="form-control" placeholder="100000" />
-            </div>
-            <div class="mb-3">
-              <label for="rekberProduct">Produk</label>
-              <input id="rekberProduct" class="form-control" placeholder="Contoh: MLDP28 - 28 Diamond" />
-            </div>
-            <button id="sendRekber" class="btn btn-danger w-100">Kirim Transaksi ke Admin (WA)</button>
-          </form>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Product Modal -->
-  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+  <!-- Modal: Rekber Form -->
+  <div class="modal fade" id="modalRekberForm" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
       <div class="modal-content">
-        <div class="modal-header border-0">
-          <h5 id="productTitle" class="modal-title">Top-up</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-header">
+          <h5 class="modal-title">Form Transaksi Rekber (WA)</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" style="max-height:72vh;overflow:auto;">
-          <form id="productForm">
+        <div class="modal-body">
+          <form id="formRekber">
             <div class="mb-2">
-              <label for="gameId">ID GAME (server + id / username)</label>
-              <input id="gameId" class="form-control" placeholder="Contoh: 1234-5678 / username" required />
+              <label class="form-label">Nomor WA Seller</label>
+              <input id="rekberSeller" class="form-control form-control-sm" placeholder="62812xxxx..." type="tel">
             </div>
-
-            <div class="mb-3">
-              <label for="paketSelect">Pilih Paket</label>
-              <select id="paketSelect" class="form-select" required>
-                <option value="">-- pilih paket --</option>
-              </select>
+            <div class="mb-2">
+              <label class="form-label">Nomor WA Buyer</label>
+              <input id="rekberBuyer" class="form-control form-control-sm" placeholder="62812xxxx..." type="tel">
             </div>
-
-            <div class="mb-3 pay-preview">
-              <div class="d-flex justify-content-between"><div>Harga dasar</div><div id="basePrice">-</div></div>
-              <div class="d-flex justify-content-between"><div>3 digit verifikasi</div><div id="rand3">-</div></div>
-              <div class="d-flex justify-content-between"><div><strong>Total yang harus dibayar</strong></div><div id="totalPrice"><strong>-</strong></div></div>
-
-              <div class="mt-3 d-flex gap-2">
-                <button type="button" id="copyTotal" class="btn btn-sm btn-outline-light">Salin Total</button>
-                <button type="button" id="showDana" class="btn btn-sm btn-outline-light">Tampilkan DANA</button>
-                <button type="button" id="showQris" class="btn btn-sm btn-outline-light">Tampilkan QRIS</button>
-              </div>
-
-              <div id="payInfo" class="mt-3" style="display:none">
-                <div id="danaInfo" style="display:none" class="muted">DANA: <strong>085156375253</strong> (Vina Pandu winata)</div>
-                <div id="qrisImage" style="display:none"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhS8JSpX1dp4v54D7iCOK4zyRJtZOFh1vuG9JLrU6AroEZfBbqMymFv1HjLSpFzYO4G28RM67k4nvWeBgQl-NJWuHJzKytTvHJifHYCszxN999ZTinKoxYi0jFATqawnomHHFSnL9Cg03a0XcwWrbJh2ckt7muSbgA6YQTO_kySYyWqajF4JJdE5sHUFsMV/s320/QRIS.png" alt="QRIS" class="qris-img" /></div>
-              </div>
+            <div class="mb-2">
+              <label class="form-label">Nilai Transaksi (Rp)</label>
+              <input id="rekberValue" class="form-control form-control-sm" placeholder="100000" type="number">
             </div>
-
-            <div class="mt-3">
-              <button id="sendOrder" class="btn btn-danger w-100">Kirim Transaksi ke Admin (WA)</button>
+            <div class="mb-2">
+              <label class="form-label">Produk</label>
+              <input id="rekberProduct" class="form-control form-control-sm" placeholder="Nama produk" type="text">
             </div>
+            <div class="d-grid gap-2 mt-2">
+              <button type="button" class="btn btn-danger" id="sendRekberBtn">Kirim Transaksi ke Admin (WA)</button>
+            </div>
+            <div class="mt-2 small" style="color:var(--muted)">Admin WA: <strong>+62 851-5707-7789</strong></div>
           </form>
         </div>
       </div>
     </div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  // product data
-  const PRODUCTS = {
-    mlbb: [
-      {code:'MLDP28', name:'28 Diamond', price:10000},
-      {code:'MLDP36', name:'36 Diamond', price:12000},
-      {code:'MLDP59', name:'59 Diamond', price:18000},
-      {code:'MLDP74', name:'74 Diamond', price:22000},
-      {code:'MLDP85', name:'85 Diamond', price:24000},
-      {code:'MLDP172', name:'172 Diamond', price:49000},
-      {code:'MLDP370', name:'370 Diamond', price:101000}
-    ],
-    ff: [
-      {code:'FFP70', name:'70 Diamond', price:10000},
-      {code:'FFP100', name:'100 Diamond', price:15000},
-      {code:'FFP140', name:'140 Diamond', price:20000},
-      {code:'FFP200', name:'200 Diamond', price:28000},
-      {code:'FFP400', name:'400 Diamond', price:53000},
-      {code:'FFP720', name:'720 Diamond', price:93000},
-      {code:'FFP1000', name:'1000 Diamond', price:128000},
-      {code:'FFP2000', name:'2000 Diamond', price:256000}
-    ],
-    roblox: [
-      {code:'RBX1', name:'100 Robux', price:91000},
-      {code:'RBX2', name:'200 Robux', price:109000},
-      {code:'RBX4', name:'400 Robux', price:141000}
-    ],
-    pubg: [], ragnarok: [], others: []
-  };
+  <!-- Modal: Product / Topup -->
+  <div class="modal fade" id="modalTopup" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="topupTitle" class="modal-title">Top Up</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formTopup">
+            <div class="mb-2">
+              <label class="form-label">ID GAME (Server + ID)</label>
+              <input id="gameId" class="form-control form-control-sm" placeholder="Contoh: 12345 / 01-9876543210">
+            </div>
 
-  const adminWA = '6285157077789';
-  function $(id){return document.getElementById(id)}
-  function formatRupiah(n){ return 'Rp ' + Number(n).toLocaleString('id-ID'); }
-  function random3(){ return Math.floor(Math.random()*900)+100; } // 100..999
+            <div class="mb-2">
+              <label class="form-label">Produk Diamond / Voucher</label>
+              <select id="productSelect" class="form-select form-select-sm"></select>
+              <div id="productCode" class="small" style="color:var(--muted); margin-top:6px;"></div>
+            </div>
 
-  // Rekber modal
-  const rekberModal = new bootstrap.Modal($('rekberModal'));
-  $('openRekber').addEventListener('click', (e)=>{ e.preventDefault(); rekberModal.show(); });
-  $('rekberWaBtn').addEventListener('click', ()=>{ $('rekberForm').style.display='block'; });
+            <div class="mb-2">
+              <label class="form-label">Metode Pembayaran</label>
+              <div class="d-flex gap-3 align-items-center">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="pay" id="payDana" value="dana" checked>
+                  <label class="form-check-label small" for="payDana">DANA</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="pay" id="payQris" value="qris">
+                  <label class="form-check-label small" for="payQris">QRIS</label>
+                </div>
+              </div>
+            </div>
 
-  $('sendRekber').addEventListener('click', (ev)=>{
-    ev.preventDefault();
-    const seller = $('waSeller').value.trim();
-    const buyer = $('waBuyer').value.trim();
-    const amount = $('rekberAmount').value.trim();
-    const prod = $('rekberProduct').value.trim();
-    if(!seller || !buyer || !amount){ alert('Lengkapi data Rekber'); return; }
-    const text = `Permintaan Rekber%0ASeller:%20${encodeURIComponent(seller)}%0ABuyer:%20${encodeURIComponent(buyer)}%0AProduk:%20${encodeURIComponent(prod)}%0AJumlah:%20Rp${encodeURIComponent(amount)}`;
-    window.open(`https://wa.me/${adminWA}?text=${text}`,'_blank');
-  });
+            <div id="payInfo" class="mb-2">
+              <div id="infoDana" class="pay-info">
+                <div><strong>DANA</strong></div>
+                <div class="small" style="color:var(--muted)">085156375253 (Vina Pandu Winata)</div>
+              </div>
+              <div id="infoQris" class="pay-info" style="display:none;">
+                <div><strong>QRIS</strong></div>
+                <div class="small" style="color:var(--muted)">Scan QRIS untuk membayar</div>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhS8JSpX1dp4v54D7iCOK4zyRJtZOFh1vuG9JLrU6AroEZfBbqMymFv1HjLSpFzYO4G28RM67k4nvWeBgQl-NJWuHJzKytTvHJifHYCszxN999ZTinKoxYi0jFATqawnomHHFSnL9Cg03a0XcwWrbJh2ckt7muSbgA6YQTO_kySYyWqajF4JJdE5sHUFsMV/s320/QRIS.png" alt="QRIS" class="img-fluid mt-2" style="max-width:200px;">
+              </div>
+            </div>
 
-  // product modal
-  const productModal = new bootstrap.Modal($('productModal'));
-  function openProduct(game){
-    const title = $('productTitle');
-    title.textContent = (game==='mlbb')? 'Top-up Mobile Legend' : (game==='ff')? 'Top-up Free Fire' : (game==='roblox')? 'Top-up Roblox' : 'Top-up '+game.toUpperCase();
-    const sel = $('paketSelect');
-    sel.innerHTML = '<option value="">-- pilih paket --</option>';
-    const list = PRODUCTS[game] || [];
-    if(list.length===0){
-      sel.innerHTML += `<option value="">Tidak ada paket untuk ${game}</option>`;
-    } else {
-      list.forEach(p=>{
-        const v = JSON.stringify(p);
-        const txt = `${p.code} — ${p.name} — ${formatRupiah(p.price)}`;
-        sel.innerHTML += `<option value='${v}'>${txt}</option>`;
-      });
+            <div class="mb-2">
+              <label class="form-label">Harga Dasar</label>
+              <div><span id="basePrice" class="price-badge">Rp. 0</span></div>
+              <div class="small" style="color:var(--muted); margin-top:6px;">Sistem menambahkan 3 digit unik untuk verifikasi (otomatis).</div>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label">Total (dengan 3 digit unik)</label>
+              <div class="d-flex gap-2 align-items-center">
+                <div><span id="totalPrice" class="price-badge">Rp. 0</span></div>
+                <button type="button" id="regen3" class="btn btn-sm btn-outline-secondary copy-btn">Regenerate 3-digit</button>
+                <button type="button" id="copyTotal" class="btn btn-sm btn-outline-light copy-btn">Copy Total</button>
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label">Catatan (opsional)</label>
+              <textarea id="note" class="form-control form-control-sm" rows="2" placeholder="Contoh: waktu topup, request khusus"></textarea>
+            </div>
+
+            <div class="d-grid gap-2 mt-2">
+              <button type="button" id="sendTopupBtn" class="btn btn-danger">Kirim Transaksi ke Admin (WA)</button>
+            </div>
+            <div class="mt-2 small" style="color:var(--muted)">Admin WA: <strong>+62 851-5707-7789</strong></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap & script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // --- katalog produk sesuai permintaan ---
+    const CATALOG = {
+      ml: {
+        title: "Mobile Legend (MLBB)",
+        products: [
+          { code:"MLDP28", label:"28 DIAMOND", price:10000 },
+          { code:"MLDP36", label:"36 DIAMOND", price:12000 },
+          { code:"MLDP59", label:"59 DIAMOND", price:18000 },
+          { code:"MLDP74", label:"74 DIAMOND", price:22000 },
+          { code:"MLDP85", label:"85 DIAMOND", price:24000 },
+          { code:"MLDP172", label:"172 DIAMOND", price:49000 },
+          { code:"MLDP370", label:"370 DIAMOND", price:101000 }
+        ]
+      },
+      ff: {
+        title: "Free Fire (FF)",
+        products: [
+          { code:"FFP70", label:"70 DIAMOND", price:10000 },
+          { code:"FFP100", label:"100 DIAMOND", price:15000 },
+          { code:"FFP140", label:"140 DIAMOND", price:20000 },
+          { code:"FFP200", label:"200 DIAMOND", price:28000 },
+          { code:"FFP400", label:"400 DIAMOND", price:53000 },
+          { code:"FFP720", label:"720 DIAMOND", price:93000 },
+          { code:"FFP1000", label:"1000 DIAMOND", price:128000 },
+          { code:"FFP2000", label:"2000 DIAMOND", price:256000 }
+        ]
+      },
+      roblox: {
+        title: "Roblox",
+        products: [
+          { code:"RBX1", label:"VOUCHER 100 ROBUX", price:91000 },
+          { code:"RBX2", label:"VOUCHER 200 ROBUX", price:109000 },
+          { code:"RBX4", label:"VOUCHER 400 ROBUX", price:141000 }
+        ]
+      }
+      // other games can be added similarly
+    };
+
+    const ADMIN_WA = "6285157077789";
+
+    // helpers
+    function formatRp(n){
+      if(!n && n !== 0) return "Rp. 0";
+      return "Rp. " + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
-    // reset preview
-    $('basePrice').textContent = '-';
-    $('rand3').textContent = '-';
-    $('totalPrice').textContent = '-';
-    $('payInfo').style.display='none';
-    $('danaInfo').style.display='none';
-    $('qrisImage').style.display='none';
-    // store game
-    $('productModal').dataset.game = game;
-    productModal.show();
-  }
+    function gen3digit(){ return Math.floor(Math.random()*900)+100; }
 
-  // compute and display total
-  $('paketSelect').addEventListener('change', computeTotal);
-  function computeTotal(){
-    const val = $('paketSelect').value;
-    if(!val) return;
-    const p = JSON.parse(val);
-    const base = Number(p.price);
-    const r = random3();
-    const total = Math.floor(base/1000)*1000 + r; // 3-digit alg
-    $('basePrice').textContent = formatRupiah(base);
-    $('rand3').textContent = r;
-    $('totalPrice').innerHTML = '<strong>' + formatRupiah(total) + '</strong>';
-    $('productModal').dataset.total = total;
-    $('productModal').dataset.paket = p.code + ' | ' + p.name;
-  }
+    // UI references
+    const modalRekChoice = new bootstrap.Modal(document.getElementById('modalRekberChoice'));
+    const modalRekForm = new bootstrap.Modal(document.getElementById('modalRekberForm'));
+    const modalTopup = new bootstrap.Modal(document.getElementById('modalTopup'));
 
-  // payment display
-  $('showDana').addEventListener('click', ()=>{ $('payInfo').style.display='block'; $('danaInfo').style.display='block'; $('qrisImage').style.display='none'; });
-  $('showQris').addEventListener('click', ()=>{ $('payInfo').style.display='block'; $('danaInfo').style.display='none'; $('qrisImage').style.display='block'; });
+    // Rekber button -> open choice
+    document.querySelector('.pill').addEventListener('click', ()=> modalRekChoice.show());
+    document.getElementById('openRekberForm').addEventListener('click', ()=> {
+      modalRekChoice.hide();
+      setTimeout(()=> modalRekForm.show(), 220);
+    });
 
-  // copy total
-  $('copyTotal').addEventListener('click', ()=>{
-    const t = $('productModal').dataset.total;
-    if(!t){ alert('Belum ada total'); return; }
-    navigator.clipboard.writeText(String(t)).then(()=>{ alert('Total tersalin: ' + t); });
-  });
+    // send rekber
+    document.getElementById('sendRekberBtn').addEventListener('click', ()=>{
+      const seller = document.getElementById('rekberSeller').value.trim();
+      const buyer = document.getElementById('rekberBuyer').value.trim();
+      const value = document.getElementById('rekberValue').value.trim();
+      const product = document.getElementById('rekberProduct').value.trim();
+      if(!seller || !buyer || !value || !product){
+        alert("Lengkapi semua field Rekber.");
+        return;
+      }
+      const msg = `REKBER\nSeller: ${seller}\nBuyer: ${buyer}\nNilai: Rp ${value}\nProduk: ${product}\n\nMohon proses.`;
+      const url = `https://wa.me/${ADMIN_WA}?text=` + encodeURIComponent(msg);
+      window.open(url, "_blank");
+    });
 
-  // send order to WA admin
-  $('sendOrder').addEventListener('click', (e)=>{
-    e.preventDefault();
-    const game = $('productModal').dataset.game || '';
-    const id = $('gameId').value.trim();
-    const paketRaw = $('paketSelect').value;
-    if(!id || !paketRaw){ alert('Lengkapi form top-up (ID & paket)'); return; }
-    const paket = JSON.parse(paketRaw);
-    // recompute final fresh for message
-    const r = random3();
-    const final = Math.floor(paket.price/1000)*1000 + r;
-    const msg = `Order TopUp ${encodeURIComponent(game.toUpperCase())}%0AID:%20${encodeURIComponent(id)}%0APaket:%20${encodeURIComponent(paket.code)}%20(${encodeURIComponent(paket.name)})%0AHarga:%20Rp${final}`;
-    window.open(`https://wa.me/${adminWA}?text=${msg}`,'_blank');
-  });
+    // attach click to product boxes
+    document.getElementById('btn-ml').addEventListener('click', ()=> openTopup('ml'));
+    document.getElementById('btn-ff').addEventListener('click', ()=> openTopup('ff'));
+    document.getElementById('btn-roblox').addEventListener('click', ()=> openTopup('roblox'));
+    document.getElementById('btn-pubg').addEventListener('click', ()=> openTopup('pubg'));
+    document.getElementById('btn-ragnarok').addEventListener('click', ()=> openTopup('ragnarok'));
+    document.getElementById('btn-lainnya').addEventListener('click', ()=> openTopup('lainnya'));
 
-  // small UX: when modal shown, focus first input
-  document.getElementById('productModal').addEventListener('shown.bs.modal', ()=>{ const el = $('gameId'); if(el) el.focus(); });
-  document.getElementById('rekberModal').addEventListener('shown.bs.modal', ()=>{ const el = $('waSeller'); if(el) el.focus(); });
-</script>
+    // topup state
+    let currentKey = null;
+    let basePrice = 0;
+    let suffix = gen3digit();
+
+    function openTopup(key){
+      currentKey = key;
+      const title = document.getElementById('topupTitle');
+      const select = document.getElementById('productSelect');
+      const codeInfo = document.getElementById('productCode');
+      const basePriceEl = document.getElementById('basePrice');
+      const totalPriceEl = document.getElementById('totalPrice');
+
+      // fill title and products
+      if(CATALOG[key]){
+        title.textContent = CATALOG[key].title;
+        select.innerHTML = "";
+        CATALOG[key].products.forEach((p, idx)=>{
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.dataset.code = p.code;
+          opt.dataset.price = p.price;
+          opt.textContent = `${p.label} — ${formatRp(p.price)} (${p.code})`;
+          select.appendChild(opt);
+        });
+        // default select first
+        select.selectedIndex = 0;
+        basePrice = Number(select.options[0].dataset.price || 0);
+        codeInfo.textContent = `Kode: ${select.options[0].dataset.code || ''}`;
+      } else {
+        title.textContent = "Top Up - Tidak ada katalog";
+        select.innerHTML = '<option value="-1">Tidak ada produk terdaftar</option>';
+        basePrice = 0;
+        codeInfo.textContent = '';
+      }
+
+      // reset fields
+      document.getElementById('gameId').value = "";
+      document.getElementById('note').value = "";
+      suffix = gen3digit();
+      basePriceEl.textContent = formatRp(basePrice);
+      totalPriceEl.textContent = formatRp(basePrice + suffix);
+
+      // show modal
+      modalTopup.show();
+    }
+
+    // when product select changes
+    document.getElementById('productSelect').addEventListener('change', (e)=>{
+      const opt = e.target.options[e.target.selectedIndex];
+      basePrice = Number(opt.dataset.price || 0);
+      document.getElementById('productCode').textContent = opt.dataset.code ? `Kode: ${opt.dataset.code}` : '';
+      document.getElementById('basePrice').textContent = formatRp(basePrice);
+      document.getElementById('totalPrice').textContent = formatRp(basePrice + suffix);
+    });
+
+    // pay method toggle
+    document.getElementById('payDana').addEventListener('change', togglePay);
+    document.getElementById('payQris').addEventListener('change', togglePay);
+    function togglePay(){
+      const q = document.getElementById('payQris').checked;
+      document.getElementById('infoQris').style.display = q ? 'block' : 'none';
+      document.getElementById('infoDana').style.display = q ? 'none' : 'block';
+    }
+
+    // regen 3-digit
+    document.getElementById('regen3').addEventListener('click', ()=>{
+      suffix = gen3digit();
+      document.getElementById('totalPrice').textContent = formatRp(basePrice + suffix);
+    });
+
+    // copy total
+    document.getElementById('copyTotal').addEventListener('click', async ()=>{
+      const txt = document.getElementById('totalPrice').textContent;
+      try{
+        await navigator.clipboard.writeText(txt);
+        alert('Total disalin: ' + txt);
+      }catch(e){
+        prompt('Salin total ini:', txt);
+      }
+    });
+
+    // send topup via WA
+    document.getElementById('sendTopupBtn').addEventListener('click', ()=>{
+      const gid = document.getElementById('gameId').value.trim();
+      const select = document.getElementById('productSelect');
+      if(select.value === "-1"){
+        alert('Tidak ada produk. Pilih game lain.');
+        return;
+      }
+      if(!gid){
+        alert('Isi ID GAME terlebih dahulu.');
+        return;
+      }
+      const opt = select.options[select.selectedIndex];
+      const kode = opt.dataset.code;
+      const produk = opt.textContent;
+      const total = basePrice + suffix;
+      const payMethod = document.querySelector('input[name="pay"]:checked').value;
+      const note = document.getElementById('note').value.trim();
+
+      const msgLines = [
+        "TOPUP REQUEST",
+        `Game: ${CATALOG[currentKey]?.title || currentKey}`,
+        `ID GAME: ${gid}`,
+        `Produk: ${produk}`,
+        `Kode: ${kode}`,
+        `Harga dasar: ${formatRp(basePrice)}`,
+        `Kode unik: ${suffix}`,
+        `Total: ${formatRp(total)}`,
+        `Metode bayar: ${payMethod.toUpperCase()}`,
+        note ? `Catatan: ${note}` : "",
+        "",
+        "Mohon diproses. Terima kasih."
+      ];
+      const msg = msgLines.filter(Boolean).join("\n");
+      const url = `https://wa.me/${ADMIN_WA}?text=` + encodeURIComponent(msg);
+      window.open(url, "_blank");
+    });
+
+    // small enhancement: if game without catalog clicked -> open modal with message
+    document.getElementById('btn-pubg').addEventListener('click', ()=> {
+      if(!CATALOG['pubg']) openTopup('pubg'); // will show no product
+    });
+    document.getElementById('btn-ragnarok').addEventListener('click', ()=> {
+      if(!CATALOG['ragnarok']) openTopup('ragnarok');
+    });
+    document.getElementById('btn-lainnya').addEventListener('click', ()=> {
+      openTopup('lainnya');
+    });
+  </script>
 </body>
 </html>
